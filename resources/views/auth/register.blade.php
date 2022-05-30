@@ -1,26 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!--  meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{asset('asset/css/profile.css')}}">
+    <script src="https://kit.fontawesome.com/e342930ad0.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{asset('asset/css/register.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('asset/css/style.css')}}"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Register </title>
-  </head>
-  <body>
+    <style type="text/css">
+    </style>
+    <title>Register</title>
+</head>
 
-
-    <section class="mt-5">
-      <div class="row ">
-       <div class="col-lg-2 col-md-2 col-sm-1">
-         
-       </div>
-        <div class="col-lg-8 col-md-8 col-sm-10">
-        
-        @if ($errors->any())
+<body>
+    <section style="background-color:#1c76b9;">
+        @include('frontendtemplate.navbarn')
+    </section>
+    <div class="d-flex justify-content-center mt-5">
+        <img src="./assets/images/logo2.png" alt="" width="15%" height="auto">
+    </div>
+    <div class="TEXT-COLOR d-flex justify-content-center">
+        <h2>Register yourself here...!</h2>
+    </div>
+    @if ($errors->any())
               <div class="alert alert-danger">
                   <ul>
                       @foreach ($errors->all() as $error)
@@ -29,206 +38,206 @@
                   </ul>
               </div>
           @endif
-
-
-          <div class="card mb-5">
-            <div class="card-body">
-                <div class="col-lg-12 mb-3">
-                <img src="{{asset('asset/images/newlogo.png')}}" style="display:block;margin-right: auto;margin-left: auto;">
-              </div>
-              <div class="col-lg-12 text-center">
-                <h4 style="color: #5a9dff; margin-bottom: 50px;margin-top: 20px;">Register Into The System:</h4>
-                
-              </div>
-              <form method="post" action="{{route('register-save')}}" enctype="multipart/form-data">
+    <div class="register-container-bootom-part">
+    <form method="post" action="{{route('register-save')}}" enctype="multipart/form-data">
                 @csrf
-              <div class="row">
-               <div class="col-lg-12">
-                
-                <label class="mb-3"><strong>Representative  Name:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="name" name="name" class="form-control mb-3"   value="{{ old('name') }}">
-                
-               </div>
-                
-               
-              </div>
+        <div class="register-container-bootom-part-content">
+            <div class="TEXT-COLOR h5">
+                <label for="">
+                    Please Select Trade role
+                </label>
+
+            </div>
+
+            <div class="d-flex  flex-column  flex-md-row  gap-3 mt-3">
+                <div class="d-flex gap-2">
+                    <div class="TEXT-COLOR h5">
+                        <label for="buyer">Buyer</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="radio1" id="buyer" value="buyer">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <div class="TEXT-COLOR h5">
+                        <label for="seller">Seller</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="radio1" id="seller" value="seller">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <div class="TEXT-COLOR h5">
+                        <label for="both">Both</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="radio1" id="both" value="both">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex  flex-column  flex-md-row gap-5 mt-4">
+                <div>
+                    <label class="TEXT-COLOR h5" for="rep_name">
+                        Representative Name:
+                    </label>
+
+                    <div>
+                        <input class="INPUT_LARGE input_blk " type="text"  name="name"   value="{{ old('name') }}">
+                    </div>
+
+                </div>
 
 
-              <div class="row">
-               <div class="col-lg-6">
-             
-                <label class="mb-3"><strong>Email:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control mb-3" >
-                
-                
-               </div>
-                
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Confirm Email:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="email" name="confirm_email" value="{{ old('confirm_email') }}" class="form-control mb-3" >
-                
-              </div>   
-              
-              </div>
+                <div>
+                    <label class="TEXT-COLOR h5" for="comp_name">
+                        Company Name:
+                    </label>
+                    <div>
+                        <input class="INPUT_LARGE input_blk" type="text" name="company_name" value="{{ old('company_name') }}">
+                    </div>
 
-              <div class="row">
-               <div class="col-lg-12">
-              
-                <label class="mb-3"><strong>Company Name:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="text" name="company_name" value="{{ old('company_name') }}" class="form-control mb-3" >
-                
-              </div>   
-               
-                
-               
-              </div>
-
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Position:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="position" value="{{ old('position') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>Phone No:</strong> <span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="text" name="phone" value="{{ old('phone') }}" maxlength="15" onkeypress="return onlyNumber(event)" class="form-control mb-3" >
-                
-              </div>
-              </div>
-
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Landline Number:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="landline_number" maxlength="15" onkeypress="return onlyNumber(event)" value="{{ old('landline_number') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>Building Number:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="building_number" maxlength="15" onkeypress="return onlyNumber(event)" value="{{ old('building_number') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
+                </div>
 
 
 
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Street Name:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="street_number" value="{{ old('street_number') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>District Name:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="district_name" value="{{ old('district_name') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
+            </div>
 
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Zip Code:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="zip_code" maxlength="15" onkeypress="return onlyNumber(event)" value="{{ old('zip_code') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>City Name:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="text" name="city_name" value="{{ old('city_name') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
 
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Company Logo:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
+            <div class="d-flex  flex-column  flex-md-row mt-4">
+                <div>
+                    <label class="TEXT-COLOR h5" for="rep_name">
+                        Email Address:
+                    </label>
+
+                    <div>
+                        <input class="INPUT_LARGE input_blk " type="text" name="email" value="{{ old('email') }}">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="d-flex  flex-column  flex-md-row gap-5 mt-4">
+                <div>
+                    <label class="TEXT-COLOR h5" for="log_pass">
+                        Login Password:
+                    </label>
+
+                    <div>
+                        <input class="INPUT_LARGE input_blk " type="password" name="password" value="{{ old('password') }}">
+                    </div>
+
+                </div>
+
+
+                <div>
+                    <label class="TEXT-COLOR h5" for="conf_pass">
+                        Confirm Password:
+                    </label>
+                    <div>
+                        <input class="INPUT_LARGE input_blk" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}">
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+            <div class="d-flex  flex-column  flex-md-row gap-5 mt-4">
+                <div>
+                    <label class="TEXT-COLOR h5" for="mob_no">
+                        Mobile number:
+                    </label>
+
+                    <div>
+                        <input class="INPUT_LARGE input_blk " type="number" value="{{ old('phone') }}" maxlength="15" onkeypress="return onlyNumber(event)">
+                    </div>
+
+                </div>
+
+
+                <div>
+                    <label class="TEXT-COLOR h5" for="tle_no">
+                        Telephone Number:
+                    </label>
+                    <div>
+                        <input class="INPUT_LARGE input_blk " type="number" name="landline_number" maxlength="15" onkeypress="return onlyNumber(event)" value="{{ old('landline_number') }}">
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+            <div class="mt-4">
+                <div>
+                    <label class="TEXT-COLOR h5" for="ext_no">
+                        Extension number:
+                    </label>
+
+                    <div>
+
+                        <input class="INPUT_LARGE input_blk " type="number" name="" id="ext_no">
+                    </div>
+
+                </div>
+            </div>
+            <div class="mt-4">
+                <img src="./assets/images/rich-smith-lVVs5skyWoo-unsplash.png" alt="">
+                <p class="TEXT-COLOR h5 mt-1">Company Logo</p>
                 <input type="file" name="company_logo" value="{{ old('company_logo') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>Upload Commercial Registration:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="file" name="commercial_registration" value="{{ old('commercial_registration') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Address:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="text" name="address" value="{{ old('address') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>Upload VAT Certificate:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Not Mandatory)</span></label>
-                <input type="file" name="vat_certificate" value="{{ old('vat_certificate') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
-
-              <div class="row">
-               <div class="col-lg-6">
-              
-                <label class="mb-3"><strong>Password:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="password" name="password" value="{{ old('password') }}" class="form-control mb-3" >
-                
-               
-               </div>
-                
-               <div class="col-lg-6">
-                <label class="mb-3"><strong>Confirm Password:</strong><span style="margin-left:10px;color: red;font-size: 12px;">(Mandatory)</span></label>
-                <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control mb-3" >
-                
-              </div>
-              </div>
-              
-              
-
-              <div class="col-lg-12 mt-5">
-                <button class="btn btn-primary login-button" type="submit">Register</button>
-              </div>
-              
-            </form>
-
-            <div class="col-lg-12 text-center mb-3 signin-top">
-              <a href="{{route('welcome')}}" style="text-decoration: none;">  Alread have account?  <strong style="color:black">Login here</strong></a>
             </div>
-              <div class="col-lg-12 text-center mt-3">
-                <div class="d-inline">
-                  <a href="" style="margin-right: 20px;"><label>English</label></a>
-                </div>
-                <div class="d-inline">
-                  <a href=""><label>Arabic</label></a>
-                </div>
-              </div>
+
+            <div>
+                <label class="TEXT-COLOR h5" for="">
+                    Terms and conditions:
+                </label>
+
             </div>
-            
-          </div>
-        </div>
-        <div class="col-lg-2 col-sm-1">
-          
-        </div>
-        
-      </div>
-      
+            <div class="d-flex gap-3 TEXT-COLOR h5">
+                <div>
+                    <p>Do you agree with terms and conditions?</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <div>
+                        <input style="color: green;" type="checkbox" name="" id="">
+                    </div>
+                    <div>
+                        <p>Agree</p>
+                    </div>
+                </div>
+            </div>
 
 
-    </section>
+
+
+
+
+
+            <div class="BUTTON-CONTAINER">
+                <a href="/welcome"> <button class="BTN" onclick="">Register
+                    </button></a>
+
+
+            </div>
+
+
+
+        </form>
+        </div>
+    </div>
+
+    
+    @include('frontendtemplate.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -243,5 +252,6 @@
     @include('sweetalert::alert')
 
 
-  </body>
+</body>
+
 </html>
