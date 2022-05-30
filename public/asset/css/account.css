@@ -1,0 +1,231 @@
+* {
+box-sizing: border-box;
+}
+.topnav {
+background-color: black;
+overflow: hidden;
+}
+.row{
+margin: 0px;
+}
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+/* Change the color of links on hover */
+.topnav a:hover {
+background-color: #ddd;
+color: black;
+}
+/* Add a color to the active/current link */
+.topnav a.active {
+background-color: #04AA6D;
+color: white;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 17px;
+margin-right: 35px;
+}
+.dropdown-content a{
+float: left;
+}
+.dropdown-content {
+display: none;
+position: fixed;
+background-color: silver;
+min-width: 100px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+padding: 10px 15px;
+z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+display: block;
+}
+.bottomnav{
+padding: 10px;
+background-color: #efeded;
+}
+.email-setting{
+padding: 0px 0px 0px 37px;
+}
+.personal-info{
+color:#519bfd;
+}
+.new-password{
+background-color: transparent;
+background-repeat: no-repeat;
+border: none;
+cursor: pointer;
+overflow: hidden;
+outline: none;
+border: 1px solid #519bfd ;
+padding: 5px 20px;
+color: #519bfd;
+border-radius: 5px;
+}
+.footer-image{
+background-image: url(../images/middleimage.png);
+height: 450px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+width: 100%;
+}
+.footer-image-space{
+padding: 5px;
+}
+@media only screen and (max-width: 1920px) {
+.mobile-phone {
+padding:0px;
+}
+}
+@media only screen and (max-width: 1440px) {
+.mobile-phone {
+padding: 0px 0px 0px 0px;
+}
+}
+@media only screen and (max-width: 1366px) {
+.mobile-phone {
+padding: 0px 0px 0px 10px;
+}
+}
+@media only screen and (max-width: 1199px) {
+.mobile-phone {
+padding: 0px 0px 0px 25px;
+}
+}
+@media only screen and (max-width: 1024px) {
+.mobile-phone {
+padding: 0px 0px 0px 26px;
+}
+.footer-image-space{
+padding: 2px;
+}
+}
+
+@media only screen and (max-width: 768px) {
+.email-setting {
+padding: 0px 0px 0px 26px;
+}
+}
+@media only screen and (max-width: 575px) {
+.email-setting {
+padding: 0px 0px 0px 26px;
+}
+.mobile-phone{
+padding: 0px 0px 0px 90px;
+}
+.footer-image{
+background-image: url(../images/middleimage.png);
+height: auto;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+width: 100%;
+}
+.textcenter{
+text-align: center;
+}
+}
+@media only screen and (max-width: 414px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 14px;
+}
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 13px;
+}
+
+}
+@media only screen and (max-width: 411px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 14px;
+}
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 13px;
+}
+
+}
+@media only screen and (max-width: 375px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 14px;
+}
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 13px;
+}
+}
+@media only screen and (max-width: 360px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 12px;
+}
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 12px;
+}
+}
+@media only screen and (max-width: 320px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 10px;
+text-decoration: none;
+font-size: 12px;
+}
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 12px;
+}
+.email-setting {
+padding: 0px 0px 0px 1px;
+}
+.mobile-phone {
+padding: 0px 0px 0px 64px;
+}
+}

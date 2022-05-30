@@ -1,0 +1,236 @@
+	* {
+	box-sizing: border-box;
+	}
+	.topnav {
+	background-color: black;
+	overflow: hidden;
+	}
+	.row{
+	margin: 0px;
+	}
+	/* Style the links inside the navigation bar */
+	.topnav a {
+	float: right;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	}
+	/* Change the color of links on hover */
+	.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+	}
+	/* Add a color to the active/current link */
+	.topnav a.active {
+	background-color: #04AA6D;
+	color: white;
+	}
+	
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 17px;
+margin-right: 35px;
+}
+
+.dropdown-content a{
+    float: left;
+}
+	.dropdown-content {
+	display: none;
+	position: fixed;
+	background-color: silver;
+	min-width: 100px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding: 10px 15px;
+	z-index: 1;
+	}
+	.dropdown:hover .dropdown-content {
+	display: block;
+	}
+	ul.bottomnav {
+	list-style-type: none;
+	margin: 0;
+	padding: 3px;
+	overflow: hidden;
+	background-color:#fff;
+	}
+	ul.bottomnav li {float: right;padding-inline: 3%;}
+	ul.bottomnav li a {
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	}
+	ul.bottomnav li a:hover:not(.active) {background-color: silver;
+	border-radius: 5px;}
+	ul.bottomnav li a.active {background-color: #519bfd;border-radius: 10px;}
+	ul.bottomnav li.right {float: right;}
+	.logo{
+	float: left;
+	}
+	
+.logo{
+padding: 0px 0px 5px 10px;
+    max-width: 100px;
+    height: 60px;
+}
+	.box-shadow{
+	box-shadow: 0px 2px silver;
+	}
+	.image{
+	width: 100%;
+	}
+	.background-image{
+	background-image: url("../images/business.png");
+	height: 350px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+	}
+	.buyer-requirement{
+	text-align: center;
+	color: #fff;
+	font-size: 70px;
+	padding-top: 70px;
+	}
+	.do-you-need{
+	color: white;
+	text-align: center;
+	font-size: 30px;
+	padding-top: 20px;
+	}
+	.buyer{
+	color: #519bfd;
+	}
+	.label{
+	font-size: 18px;
+	font-weight: 400px;
+	}
+	.publish{
+	padding: 5px 60px;
+	}
+	.footer-image{
+	background-image: url(../images/middleimage.png);
+	height: 500px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+	}
+	@media only screen and (max-width: 1024px) {
+	ul.bottomnav li {
+	float: right;
+	padding-inline: 1%;
+	}
+	.buyer-equirement {
+	text-align: center;
+	color: #fff;
+	font-size: 60px;
+	padding-top: 70px;
+	}
+	.do-you-need {
+	color: white;
+	text-align: center;
+	font-size: 25px;
+	padding-top: 20px;
+	}
+	}
+	@media only screen and (max-width: 768px) {
+	ul.bottomnav li {
+	float: right;
+	padding-inline: 0%;
+	font-size: 13px;
+	}
+	.do-you-need {
+	color: white;
+	text-align: center;
+	font-size: 25px;
+	padding-top: 20px;
+	}
+	}
+	@media only screen and (max-width: 767px) {
+	ul.bottomnav li.right,
+	ul.bottomnav li {float: none;}
+	.logo{
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+	.image{
+	width: auto;
+	padding-top: 10px;
+	}
+	.buyer-requirement {
+	text-align: center;
+	color: #fff;
+	font-size: 55px;
+	padding-top: 70px;
+	}
+	.do-you-need {
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	padding-top: 20px;
+	}
+	}
+	@media only screen and (max-width: 575px) {
+	.buyer-equirement {
+	text-align: center;
+	color: #fff;
+	font-size: 50px;
+	padding-top: 70px;
+	}
+	.do-you-need {
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	padding-top: 20px;
+	}
+	.buyer-requirement {
+	text-align: center;
+	color: #fff;
+	font-size: 45px;
+	padding-top: 70px;
+	}
+	.textcenter{
+	text-align: center;
+	}
+	.footer-image{
+	height: auto;
+	}
+	}
+	@media only screen and (max-width: 425px) {
+	.topnav a {
+	float: right;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 10px;
+	text-decoration: none;
+	font-size: 17px;
+	}
+	}
+	@media only screen and (max-width: 320px) {
+	.topnav a {
+	float: right;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 10px 6px;
+	text-decoration: none;
+	font-size: 17px;
+	}
+	.dropdown {
+	position: relative;
+	display: inline-block;
+	padding: 12px 16px;
+	color: white;
+	font-size: 15px;
+	}
+	}

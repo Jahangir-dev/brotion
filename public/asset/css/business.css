@@ -1,0 +1,467 @@
+* {
+box-sizing: border-box;
+padding: 0%;
+margin: 0%;
+}
+.topnav {
+background-color: black;
+overflow: hidden;
+}
+.row{
+margin: 0px;
+}
+
+.bg{
+    background-image:    url("/asset/images/mountains.png");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    width: 100%;
+   height: 200px;
+   border-radius: 10px;
+
+}
+.icon{
+    margin-top: 100px;
+    margin-right: 10px;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+/* Change the color of links on hover */
+.topnav a:hover {
+background-color: #ddd;
+color: black;
+}
+/* Add a color to the active/current link */
+.topnav a.active {
+background-color: #04AA6D;
+color: white;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+padding: 14px 16px;
+color: white;
+font-size: 17px;
+margin-right: 35px;
+}
+
+.dropdown-content a{
+    float: left;
+}
+.dropdown-content {
+display: none;
+position: fixed;
+background-color: silver;
+min-width: 100px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+padding: 10px 15px;
+z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+display: block;
+}
+.icon{
+color: silver;
+font-size: 20px;
+}
+ul.bottomnav {
+    /* background-image: url("../images/mountains.png");
+height: 350px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+width: 100%; */
+list-style-type: none;
+margin: 0;
+padding: 3px;
+overflow: hidden;
+background-color: #1a75bb;
+}
+ul.bottomnav li {float: right;padding-inline: 3%;}
+ul.bottomnav li a {
+display: block;
+color: aliceblue;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+ul.bottomnav li a:hover:not(.active) {background-color: silver;border-radius: 5px;}
+ul.bottomnav li a.active {background-color: #519bfd;border-radius: 5px;}
+ul.bottomnav li.right {float: right;}
+.logo{
+float: left;
+}
+
+
+
+
+.user-detail-card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    transition: 0.3s;
+    border: none;
+    height: auto!important;
+}
+.Car-selling {
+
+    color: #1c76b9;
+    font-family: Poppins;
+
+  }
+
+.logo{
+padding: 0px 0px 5px 10px;
+    max-width: 100px;
+    height: 60px;
+}
+.business{
+text-align: center;
+color: #fff;
+font-size: 70px;
+padding-top: 60px;
+}
+.do-you-need{
+color: white;
+text-align: center;
+font-size: 35px;
+padding-top: 20px;
+}
+.list-of-business{
+color: #519bfd;
+}
+.add-bussiness{
+cursor: pointer!important;
+border: 1px solid #519bfd;
+background-color:#fff ;
+color: #519bfd;
+font-size: 1rem;
+text-decoration: none;
+padding: 5.5px 14px;
+border-radius: 5px;
+float: right;
+margin-top: 0.5rem;
+}
+.name{
+font-size: 17px;
+padding-top: 20px;
+padding-left: 5px;
+}
+.david-name{
+font-size: 15px;
+font-weight: 400px;
+}
+.id{
+font-size: 17px;
+padding: 20px 0px 0px 15px;
+}
+.email{
+font-size: 17px;
+padding: 15px 0px 0px 15px;
+}
+.sidelogo{
+width: 100%;
+}
+.hayet-leather{
+margin-top: 25px;
+font-size: 21px;
+}
+.cr-number{
+margin-top: 25px;
+}
+.Rectangle-733{
+    border-radius: 10px;
+     background-color: rgba(26, 117, 187, 0.2);
+
+    width: 100%;
+    height: 42.5px;
+
+}
+.star-width{
+width: 22%;
+}
+.cr-padding{
+padding-left: 50px;
+}
+p{
+text-align: justify;
+}
+.who-are-you{
+color: #519bfd;
+}
+.see-more{
+padding: 10px 50px;
+background-color: #519bfd;
+}
+.our-top-partner-images{
+width: 100%;
+}
+.our-top-partner-images-padding{
+padding-top: 50px;
+}
+.last-image-width{
+width: auto;
+}
+.last-image-top{
+margin-top: 5rem;
+}
+.footer-image{
+    background-color: #1a75bb;
+}
+.footer-image-space{
+padding: 5px;
+}
+
+.middle-card{
+	background-color: #f5f5f5;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    transition: 0.3s;
+    height: 180px!important;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.card{
+	height: 150px;
+}
+
+
+@media only screen and (max-width: 1590px) {
+.email {
+font-size: 17px;
+padding: 15px 0px 0px 0px;
+}
+
+}
+@media only screen and (max-width: 1199px) {
+.name {
+font-size: 17px;
+padding-top: 20px;
+padding-left: 20px;
+}
+
+.id {
+font-size: 17px;
+padding: 20px 0px 0px 25px;
+}
+.email {
+font-size: 17px;
+padding: 15px 0px 0px 20px;
+}
+.last-image-width {
+width: 65%;
+}
+}
+@media only screen and (max-width: 1024px) {
+ul.bottomnav li {
+float: right;
+padding-inline: 1%;
+}
+
+.label {
+font-size: 12px;
+}
+}
+@media only screen and (max-width: 991px) {
+.name{
+padding-left: 0px;
+}
+.email {
+font-size: 17px;
+padding: 15px 0px 0px 0px;
+}
+
+.card{
+	height: auto!important;
+
+}
+}
+@media only screen and (max-width: 768px) {
+ul.bottomnav li {
+float: right;
+padding-inline: 0%;
+font-size: 13px;
+}
+
+.name{
+padding-left: 0px;
+}
+.email {
+font-size: 17px;
+padding: 15px 0px 0px 0px;
+}
+.star-width{
+width: 50%;
+margin-top: 15px;
+}
+.our-top-partner-images {
+width: 85%;
+}
+.college-excellence{
+padding-top: 35px;
+}
+.last-image-width{
+width: 60%;
+}
+}
+@media only screen and (max-width: 767px) {
+ul.bottomnav li.right,
+ul.bottomnav li {float: none;}
+.logo{
+float: none;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+.our-top-partner-images {
+width: 100%;
+}
+.our-top-partner-images-padding{
+padding-top: 35px;
+}
+.college-excellence{
+padding-top: 20px;
+}
+.last-image-width {
+width: 63%;
+}
+.name {
+font-size: 17px;
+padding-top: 20px;
+padding-left: 0px;
+}
+.id {
+font-size: 17px;
+padding: 20px 0px 0px 0px;
+}
+.email {
+font-size: 17px;
+padding: 14px 0px 0px 0px;
+}
+.cr-padding{
+padding-left: 164px;
+}
+.second-icon{
+display: block;
+margin-right: auto;
+margin-left: auto;
+}
+.second-email{
+text-align: center;
+}
+.second-number{
+text-align: center;
+}
+.forth-icon{
+display: block;
+margin-right: auto;
+margin-left: auto;
+}
+.forth-email{
+text-align: center;
+}
+.forth-number{
+text-align: center;
+}
+.star-width {
+width: 50%;
+margin-top: 0px;
+}
+}
+@media only screen and (max-width: 575px) {
+.sidelogo{
+width: auto;
+display: block;
+margin-right: auto;
+margin-left: auto;
+}
+.icon-miidle{
+text-align: center;
+}
+
+.add-bussiness{
+float: left;
+}
+.hayet-leather-center{
+text-align: center;
+}
+.cr-padding{
+text-align: center;
+padding: 0px;
+}
+p {
+font-size: 15px;
+text-align: justify;
+}
+.our-top-partner-images {
+width: auto;padding-bottom: 20px;
+}
+.last-image-width {
+width: auto;
+}
+.textcenter{
+text-align: center;
+}
+
+.footer-image{
+    background-color: #1a75bb;
+}
+}
+@media only screen and (max-width: 480px) {
+.do-you-need {
+color: white;
+text-align: center;
+font-size: 20px;
+padding-top: 20px;
+}
+
+.footer-image{
+    background-color: #1a75bb;
+}
+}
+@media only screen and (max-width: 425px) {
+
+    .footer-image{
+        background-color: #1a75bb;
+    }
+
+    }
+@media only screen and (max-width: 320px) {
+.topnav a {
+float: right;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 9px;
+text-decoration: none;
+font-size: 17px;
+}
+.footer-image{
+    background-color: #1a75bb;
+}
+}
+.img{
+    background-image: url('../images/Group 16937.png');
+    height: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+     background-size: cover;
+     width: 100%;
+}
+.irene-strong-v2aKnjMbP_k-unsplash {
+    width: 200px;
+    height: 70px;
+    opacity: 0.15;
+    background-color: #000;
+  }
