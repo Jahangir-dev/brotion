@@ -89,4 +89,10 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\UserDetails','user_id','id');
     }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class);
+        // return $this->hasMany('App\Models\Tender','user_id','id');
+    }
 }

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\UserOpportunity;
 use Auth;
 use App\Models\OpportunityDocument;
+use App\Models\Tender;
+use App\Models\TenderItem;
 use App\Models\User;
 use Mail;
 use App\Models\OpportunityCount;
@@ -143,7 +145,8 @@ class UserController extends Controller
     $opp_awarded_count = OpportunityDocument::where('user_id', Auth::user()->id)->where('status', '=', 1)->count();
     $opp_pending_count = OpportunityDocument::where('user_id', Auth::user()->id)->where('status', '=', 0)->count();
 
-    $opportunity = UserOpportunity::select();
+    $opportunity = Tender::select();
+    // $opportunity = UserOpportunity::select();
 
     if ($request->has('data') && $request->data == 'yes') {
       $opportunity = $opportunity->where('user_id', '=', Auth::user()->id);
@@ -190,19 +193,19 @@ class UserController extends Controller
     }
 
 
-    $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('opp_count', 'user_opp_title', 'user_detail', 'user', 'opp_category')->paginate(5);
-
+    $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('items', 'user')->paginate(5);
+    // $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('opp_count', 'user_opp_title', 'user_detail', 'user', 'opp_category','items')->paginate(5);
 
 
 
     $due_date_count = Null;
-    foreach ($opportunity as $opp) {
+    // foreach ($opportunity as $opp) {
 
-      $now = time();
-      $your_date = strtotime($opp->due_date);
-      $datediff = $your_date - $now;
-      $opp->due_date = round($datediff / (60 * 60 * 24));
-    }
+    //   $now = time();
+    //   $your_date = strtotime($opp->due_date);
+    //   $datediff = $your_date - $now;
+    //   $opp->due_date = round($datediff / (60 * 60 * 24));
+    // }
     return view('userpages.opportunity', compact('opportunity', 'due_date_count', 'opp_count', 'opp_awarded_count', 'opp_pending_count', 'setting', 'category'));
   }
 

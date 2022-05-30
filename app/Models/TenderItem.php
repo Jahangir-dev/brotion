@@ -12,4 +12,9 @@ class TenderItem extends Model
     protected $fillable = [
         'tender_id','items', 'sow', 'document','document_file'
     ];
+
+    public function tender()
+    {
+        return $this->belongsTo(Tender::class);
+    }
 }
