@@ -192,7 +192,7 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                     
-                    <button class="btn btn-warning approved-button">Live</button>
+                    <button class="btn btn-warning approved-button">{{$tender->due_date < now() ? 'Closed' : 'Live'}}</button>
                   </div>
                   
                 </div>
@@ -263,7 +263,9 @@
                     <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
                   </div>
                   <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
+                    @if($tender->due_date >= now())
                     <button class="btn btn-secondary running-button">Running</button>
+                    @endif
                     <button class="btn btn-secondary approved">Extend Date</button>
                   </div>
                 </div>
