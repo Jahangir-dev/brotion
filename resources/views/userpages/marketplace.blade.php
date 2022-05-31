@@ -135,7 +135,7 @@
                   <div class="card-body card-padding">.
                     <div class="row">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-6 ">
-                        <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> 10 Times</span></p>
+                        <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> {{$tender->seen}} Times</span></p>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
                         <p class="Uper-rowpararight"> <i> Due date:</i> {{date('m/d/Y',strtotime($tender->due_date))}}</p>
@@ -193,7 +193,7 @@
                         <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{$tender->user->user_detail->city_name}}</span></p>
                       </div>
                       <div class="col-xl-4 col-5">
-        <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> 10 Times</strong></p>
+        <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> {{$tender->seen}} Times</strong></p>
                       </div>
                       <div class="ps-xl-5 col-xl-4 col-4">
       <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgtwo"> <span class="cards-last-rowimg-span">Share </span></p>
