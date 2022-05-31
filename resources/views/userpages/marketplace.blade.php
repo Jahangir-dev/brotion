@@ -128,6 +128,8 @@
           </div>
           <div class="col-lg-9 col-md-7">
             <div class="row card-row-width">
+              @if($opportunity)
+              @foreach($opportunity as $tender)
             <div class="col-lg-6 col-md-12 mb-3">
                 <div class="card card_bg">
                   <div class="card-body card-padding">.
@@ -136,39 +138,47 @@
                         <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> 10 Times</span></p>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                        <p class="Uper-rowpararight"> <i> Due date:</i> 3-21-2021</p>
+                        <p class="Uper-rowpararight"> <i> Due date:</i> {{date('m/d/Y',strtotime($tender->due_date))}}</p>
                       </div>
                     </div>
                     <div class="row pt-3">
                       <div class="col-lg-4 col-md-4 col-sm-6 col-4 ">
                         <div class="Rectangle-6614  text-center">
-                          <p style="color: #1C76B9; font-size: 1.3rem; font-family: 'Open Sans';">Live</p>
+                          <p style="color: #1C76B9; font-size: 1.3rem; font-family: 'Open Sans';">{{$tender->due_date < now() ? 'Closed' : 'Live'}}</p>
                         </div>
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>Furniture (Tender Title)</strong></a></p>
+                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>{{$tender->tender_title}}</strong></a></p>
                       </div>
                     </div>
                     <div class="row pt-2">
                       <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{asset('asset/images/tv.png')}}" alt="" class="rounded img-fluid images-width">
+                        <img src="{{$tender->user->profile_photo_path}}" alt="" class="rounded img-fluid images-width">
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
                         <div class="items-rowone">
                           <div class="items-rowone-itemone">
-                          <p class="d-inline item-font-size" ><strong> 1.</strong> <i> Item name</i> </p>
-                          </div>
-                          <div class="items-rowone-itemtwo">
-                          <p class="d-inline item-font-size"><strong> 2. </strong><i> Item name </i> </p>
+                          <p class="d-inline item-font-size" >
+                          @if($tender->items)
+                      @php
+                      $items = json_decode($tender->items->items, true);
+                      $count = count($items)/3;
+                      @endphp
+                      @for($i=1;$i<=$count;$i++)
+                      
+                          <strong> {{$i}}.</strong> <i>{{$items['item'.$i]}}  </i> 
+                          @endfor
+                      @endif  
+                        </p>
                           </div>
                         </div>
                         
                         <div class="items-rowtwo">
                           <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" src="{{asset('asset/images/company logo1.svg')}}">
+                            <img class="img-fluid" style="width: 60px;height: 60px;" src="{{$tender->user->user_detail->company_logo}}">
                           </div>
                           <div class="items-rowtwo-itemtwo">
-                            <p class="mb-4 company-font">Company</p>
+                            <p class="mb-4 company-font">{{$tender->user->user_detail->company_name}}</p>
                           </div>
                           
                         </div>
@@ -180,7 +190,7 @@
                     <div class="Line-73"></div>
                     <div class="row pt-1">
                       <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> Riadh</span></p>
+                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{$tender->user->user_detail->city_name}}</span></p>
                       </div>
                       <div class="col-xl-4 col-5">
         <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> 10 Times</strong></p>
@@ -193,201 +203,8 @@
                 </div>
                 
               </div>
-              <div class="col-lg-6 col-md-12 mb-3">
-                <div class="card card_bg">
-                  <div class="card-body card-padding">.
-                    <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 ">
-                        <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> 10 Times</span></p>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                        <p class="Uper-rowpararight"> <i> Due date:</i> 3-21-2021</p>
-                      </div>
-                    </div>
-                    <div class="row pt-3">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4 ">
-                        <div class="Rectangle-6614  text-center">
-                          <p style="color: #1C76B9; font-size: 1.3rem; font-family: 'Open Sans';">Live</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>Furniture (Tender Title)</strong></a></p>
-                      </div>
-                    </div>
-                    <div class="row pt-2">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{asset('asset/images/tv.png')}}" alt="" class="rounded img-fluid images-width">
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <div class="items-rowone">
-                          <div class="items-rowone-itemone">
-                          <p class="d-inline item-font-size" ><strong> 1.</strong> <i> Item name</i> </p>
-                          </div>
-                          <div class="items-rowone-itemtwo">
-                          <p class="d-inline item-font-size"><strong> 2. </strong><i> Item name </i> </p>
-                          </div>
-                        </div>
-                        
-                        <div class="items-rowtwo">
-                          <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" src="{{asset('asset/images/company logo1.svg')}}">
-                          </div>
-                          <div class="items-rowtwo-itemtwo">
-                            <p class="mb-4 company-font">Company</p>
-                          </div>
-                          
-                        </div>
-                        
-                        
-                        
-                      </div>
-                    </div>
-                    <div class="Line-73"></div>
-                    <div class="row pt-1">
-                      <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> Riadh</span></p>
-                      </div>
-                      <div class="col-xl-4 col-5">
-        <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> 10 Times</strong></p>
-                      </div>
-                      <div class="ps-xl-5 col-xl-4 col-4">
-      <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgtwo"> <span class="cards-last-rowimg-span">Share</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              <div class="col-lg-6 col-md-12 mt-5 mb-3">
-                <div class="card card_bg">
-                  <div class="card-body card-padding">.
-                    <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 ">
-                        <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> 10 Times</span></p>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                        <p class="Uper-rowpararight"> <i> Due date:</i> 3-21-2021</p>
-                      </div>
-                    </div>
-                    <div class="row pt-3">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4 ">
-                        <div class="Rectangle-6614  text-center">
-                          <p style="color: #1C76B9; font-size: 1.3rem; font-family: 'Open Sans';">Live</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>Furniture (Tender Title)</strong></a></p>
-                      </div>
-                    </div>
-                    <div class="row pt-2">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{asset('asset/images/tv.png')}}" alt="" class="rounded img-fluid images-width">
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <div class="items-rowone">
-                          <div class="items-rowone-itemone">
-                          <p class="d-inline item-font-size" ><strong> 1.</strong> <i> Item name</i> </p>
-                          </div>
-                          <div class="items-rowone-itemtwo">
-                          <p class="d-inline item-font-size"><strong> 2. </strong><i> Item name </i> </p>
-                          </div>
-                        </div>
-                        
-                        <div class="items-rowtwo">
-                          <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" src="{{asset('asset/images/company logo1.svg')}}">
-                          </div>
-                          <div class="items-rowtwo-itemtwo">
-                            <p class="mb-4 company-font">Company</p>
-                          </div>
-                          
-                        </div>
-                        
-                        
-                        
-                      </div>
-                    </div>
-                    <div class="Line-73"></div>
-                    <div class="row pt-1">
-                      <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> Riadh</span></p>
-                      </div>
-                      <div class="col-xl-4 col-5">
-        <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> 10 Times</strong></p>
-                      </div>
-                      <div class="ps-xl-5 col-xl-4 col-4">
-      <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgtwo"> <span class="cards-last-rowimg-span">Share</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              <div class="col-lg-6 col-md-12 mt-5 mb-3">
-                <div class="card card_bg">
-                  <div class="card-body card-padding">.
-                    <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 ">
-                        <p class="Uper-rowparaleft">Seen <span style="color: #1C76B9;font-weight: 600;"> 10 Times</span></p>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                        <p class="Uper-rowpararight"> <i> Due date:</i> 3-21-2021</p>
-                      </div>
-                    </div>
-                    <div class="row pt-3">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4 ">
-                        <div class="Rectangle-6614  text-center">
-                          <p style="color: #1C76B9; font-size: 1.3rem; font-family: 'Open Sans';">Live</p>
-                        </div>
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>Furniture (Tender Title)</strong></a></p>
-                      </div>
-                    </div>
-                    <div class="row pt-2">
-                      <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{asset('asset/images/tv.png')}}" alt="" class="rounded img-fluid images-width">
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <div class="items-rowone">
-                          <div class="items-rowone-itemone">
-                          <p class="d-inline item-font-size" ><strong> 1.</strong> <i> Item name</i> </p>
-                          </div>
-                          <div class="items-rowone-itemtwo">
-                          <p class="d-inline item-font-size"><strong> 2. </strong><i> Item name </i> </p>
-                          </div>
-                        </div>
-                        
-                        <div class="items-rowtwo">
-                          <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" src="{{asset('asset/images/company logo1.svg')}}">
-                          </div>
-                          <div class="items-rowtwo-itemtwo">
-                            <p class="mb-4 company-font">Company</p>
-                          </div>
-                          
-                        </div>
-                        
-                        
-                        
-                      </div>
-                    </div>
-                    <div class="Line-73"></div>
-                    <div class="row pt-1">
-                      <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> Riadh</span></p>
-                      </div>
-                      <div class="col-xl-4 col-5">
-        <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> 10 Times</strong></p>
-                      </div>
-                      <div class="ps-xl-5 col-xl-4 col-4">
-      <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgtwo"> <span class="cards-last-rowimg-span">Share</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
+              @endforeach
+              @endif
               <!-- </div> -->
               
               

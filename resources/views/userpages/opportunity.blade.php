@@ -188,7 +188,7 @@
               <div class="card-body card-padding">
                 <div class="row ">
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    <p class="see-10-time">Seen <strong class="text-primary">10 Times</strong></p>
+                    <p class="see-10-time">Seen <strong class="text-primary"> {{$tender->seen}} Times</strong></p>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                     
@@ -257,7 +257,7 @@
                     <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> {{$tender->user->user_detail->city_name}}</p>
                   </div>
                   <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<strong  class="text-primary">10 Times</strong></p>
+                    <p>Seen<strong  class="text-primary"> {{$tender->seen}} Times</strong></p>
                   </div>
                   <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                     <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
