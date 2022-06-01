@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\UserOpportunity;
 use Auth;
 use App\Models\OpportunityDocument;
+use App\Models\Tender;
+use App\Models\TenderItem;
 use App\Models\User;
 use Mail;
 use App\Models\OpportunityCount;
@@ -139,11 +141,12 @@ class UserController extends Controller
   {
     $setting = FooterSetting::first();
     $category = OpportunityCategory::get();
-    $opp_count = UserOpportunity::where('user_id', Auth::user()->id)->count();
-    $opp_awarded_count = OpportunityDocument::where('user_id', Auth::user()->id)->where('status', '=', 1)->count();
-    $opp_pending_count = OpportunityDocument::where('user_id', Auth::user()->id)->where('status', '=', 0)->count();
+    $opp_count = Tender::where('user_id', Auth::user()->id)->count();
+    $opp_awarded_count = Tender::where('user_id', Auth::user()->id)->where('complete', '=', 1)->count();
+    $opp_pending_count = Tender::where('user_id', Auth::user()->id)->where('complete', '=', 0)->count();
 
-    $opportunity = UserOpportunity::select();
+    $opportunity = Tender::select();
+    // $opportunity = UserOpportunity::select();
 
     if ($request->has('data') && $request->data == 'yes') {
       $opportunity = $opportunity->where('user_id', '=', Auth::user()->id);
@@ -167,8 +170,15 @@ class UserController extends Controller
 
 
 
-    if ($request->has('sortby') && $request->sortby == 'date') {
-      $opportunity = $opportunity->orderBy('created_at', 'Asc');
+    if ($request->has('sortby')) {
+      if($request->sortby == 'Oldest')
+      $opportunity = $opportunity->orderBy('created_at', 'asc');
+      if($request->sortby == 'Newest')
+      $opportunity = $opportunity->orderBy('created_at', 'desc');
+      if($request->sortby == 'Assending')
+      $opportunity = $opportunity->orderBy('id', 'asc');
+      if($request->sortby == 'Descending')
+      $opportunity = $opportunity->orderBy('id', 'desc');
     }
 
 
@@ -176,33 +186,34 @@ class UserController extends Controller
 
     if (isset($request->category)) {
       $search = $request->category;
-
-      $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
-        $query->where('categories', 'like', '%' . $search . '%');;
-      });
+      $opportunity = $opportunity->where('tender_category', $request->category);
+      // $opportunity = $opportunity->whereHas('category', function ($query) use ($search) {
+      //   $query->where('categories', 'like', '%' . $search . '%');;
+      // });
     }
 
     if (isset($request->opp_title)) {
       $search = $request->opp_title;
-      $opportunity = $opportunity->whereHas('user_opp_title', function ($query) use ($search) {
-        $query->where('opp_title', 'like', '%' . $search . '%');;
-      });
+      $opportunity = $opportunity->where('tender_title', 'like', '%'.$request->opp_title.'%');
+      // $opportunity = $opportunity->whereHas('user_opp_title', function ($query) use ($search) {
+      //   $query->where('opp_title', 'like', '%' . $search . '%');;
+      // });
     }
 
 
-    $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('opp_count', 'user_opp_title', 'user_detail', 'user', 'opp_category')->paginate(5);
-
+    $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('items', 'user')->paginate(5);
+    // $opportunity = $opportunity->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->with('opp_count', 'user_opp_title', 'user_detail', 'user', 'opp_category','items')->paginate(5);
 
 
 
     $due_date_count = Null;
-    foreach ($opportunity as $opp) {
+    // foreach ($opportunity as $opp) {
 
-      $now = time();
-      $your_date = strtotime($opp->due_date);
-      $datediff = $your_date - $now;
-      $opp->due_date = round($datediff / (60 * 60 * 24));
-    }
+    //   $now = time();
+    //   $your_date = strtotime($opp->due_date);
+    //   $datediff = $your_date - $now;
+    //   $opp->due_date = round($datediff / (60 * 60 * 24));
+    // }
     return view('userpages.opportunity', compact('opportunity', 'due_date_count', 'opp_count', 'opp_awarded_count', 'opp_pending_count', 'setting', 'category'));
   }
 
@@ -363,7 +374,7 @@ class UserController extends Controller
     $setting = FooterSetting::first();
     if (Auth::check()) {
       $category = OpportunityCategory::get();
-      $opportunity = UserOpportunity::select();
+      $opportunity = Tender::select();
 
       if ($request->has('data') && $request->data == 'yes') {
         $opportunity = $opportunity->where('user_id', '=', Auth::user()->id);
@@ -383,60 +394,66 @@ class UserController extends Controller
       }
 
 
-      if ($request->has('sortby') && $request->sortby == 'date') {
-        $opportunity = $opportunity->orderBy('created_at', 'Asc');
+      if ($request->has('sortby')) {
+        if($request->sortby == 'Oldest')
+        $opportunity = $opportunity->orderBy('created_at', 'asc');
+        if($request->sortby == 'Newest')
+        $opportunity = $opportunity->orderBy('created_at', 'desc');
+        if($request->sortby == 'Assending')
+        $opportunity = $opportunity->orderBy('id', 'asc');
+        if($request->sortby == 'Descending')
+        $opportunity = $opportunity->orderBy('id', 'desc');
       }
 
       if (isset($request->opp_title)) {
         $search = $request->opp_title;
-        $opportunity = $opportunity->whereHas('user_opp_title', function ($query) use ($search) {
-          $query->where('opp_title', 'like', '%' . $search . '%');;
-        });
+        $opportunity = $opportunity->where('tender_title', 'like', '%'.$request->opp_title.'%');
+        // $opportunity = $opportunity->whereHas('user_opp_title', function ($query) use ($search) {
+        //   $query->where('opp_title', 'like', '%' . $search . '%');;
+        // });
       }
 
       if (isset($request->category)) {
         $search = $request->category;
-
-        $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
-          $query->where('categories', 'like', '%' . $search . '%');;
-        });
+          $opportunity = $opportunity->where('tender_category', $request->category);
+        // $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
+        //   $query->where('categories', 'like', '%' . $search . '%');;
+        // });
       }
 
       $user_id = Auth::user()->id;
 
-      $opportunity = $opportunity->orderBy('id', 'Desc')->with('user_opp_title', 'user_detail', 'user', 'opp_category')->with(['oppt_not_required' => function ($query) use ($user_id) {
-        $query->where('user_id', '=', $user_id);
-      }])->paginate(6);
+      $opportunity = $opportunity->orderBy('id', 'Desc')->with('items', 'user')->paginate(6);
 
       $due_date_count = Null;
 
-      foreach ($opportunity as $o) {
-        $now = time();
-        $your_date = strtotime($o->due_date);
-        $datediff = $your_date - $now;
-        $o->due_date = round($datediff / (60 * 60 * 24));
-      }
+      // foreach ($opportunity as $o) {
+      //   $now = time();
+      //   $your_date = strtotime($o->due_date);
+      //   $datediff = $your_date - $now;
+      //   $o->due_date = round($datediff / (60 * 60 * 24));
+      // }
 
       return view('userpages.marketplace', compact('opportunity', 'category', 'setting'));
     } else {
       $category = OpportunityCategory::get();
-      $opportunity = UserOpportunity::select();
+      $opportunity = Tender::select();
 
       if (isset($request->category)) {
         $search = $request->category;
-
-        $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
-          $query->where('categories', 'like', '%' . $search . '%');;
-        });
+$opportunity = $opportunity->where('tender_category', $request->category);
+        // $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
+        //   $query->where('categories', 'like', '%' . $search . '%');;
+        // });
       }
-      $opportunity = $opportunity->orderBy('id', 'Desc')->with('user_opp_title', 'user_detail', 'user', 'opp_category')->paginate(6);
+      $opportunity = $opportunity->orderBy('id', 'Desc')->with('user', 'items')->paginate(6);
       $due_date_count = Null;
-      foreach ($opportunity as $o) {
-        $now = time();
-        $your_date = strtotime($o->due_date);
-        $datediff = $your_date - $now;
-        $o->due_date = round($datediff / (60 * 60 * 24));
-      }
+      // foreach ($opportunity as $o) {
+      //   $now = time();
+      //   $your_date = strtotime($o->due_date);
+      //   $datediff = $your_date - $now;
+      //   $o->due_date = round($datediff / (60 * 60 * 24));
+      // }
 
       return view('userpages.marketplace', compact('opportunity', 'category', 'setting'));
     }

@@ -19,6 +19,11 @@ class Tender extends Model
       return $this->hasOne('App\Models\city','id','delivery_city');
    }
 
+   public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
    public function category()
    {
       return $this->hasOne('App\Models\OpportunityCategory','id','tender_category');

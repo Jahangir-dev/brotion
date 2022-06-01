@@ -183,15 +183,16 @@
 
           </div>
           <div class="col-lg-9 col-md-7 col-sm-12">
+            @foreach($opportunity as $tender)
             <div class="card-left">
               <div class="card-body card-padding">
                 <div class="row ">
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    <p class="see-10-time">Seen <strong class="text-primary">10 Times</strong></p>
+                    <p class="see-10-time">Seen <strong class="text-primary"> {{$tender->seen}} Times</strong></p>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                     
-                    <button class="btn btn-warning approved-button">Live</button>
+                    <button class="btn btn-warning approved-button">{{$tender->due_date < now() ? 'Closed' : 'Live'}}</button>
                   </div>
                   
                 </div>
@@ -199,14 +200,14 @@
                   <div class="col-lg-4 col-md-12">
                     <div class="row">
                       <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
+                        <img src="{{$tender->user->profile_photo_path}}" class="table-img">
                       </div>
                       <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/company logo1.svg')}}" class="es-image rounded-circle">
+                        <img src="{{$tender->user->user_detail->company_logo}}" class="es-image rounded-circle">
                         
                       </div>
                       <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding:0px">
-                        <p class="es-para">Company</p>
+                        <p class="es-para">{{$tender->user->user_detail->company_name}}</p>
                       </div>
                       
                     </div>
@@ -214,18 +215,28 @@
                   </div>
                   <div class="col-lg-5 col-md-12 card-inner-seeting">
                     <div class="col-lg-12">
-                      <h6 class="furniture-font"><a href="{{route('user-opportunity-detail')}}" style="text-decoration:none;color:#212529">Furniture (Tender Title)</a></h6>
+                      <h6 class="furniture-font"><a href="{{route('user-opportunity-detail')}}" style="text-decoration:none;color:#212529">{{$tender->tender_title}}</a></h6>
                     </div>
                     <div class="col-lg-12">
-                      <p style="color: #0d6efd!important;font-style: italic;">1. Item name 2. Item Name</p>
+                      <p style="color: #0d6efd!important;font-style: italic;">
+                      @if($tender->items)
+                      @php
+                      $items = json_decode($tender->items->items, true);
+                      $count = count($items)/3;
+                      @endphp
+                      @for($i=1;$i<=$count;$i++)
+                        {{$i.'.'.$items['item'.$i]. ' '}}
+                      @endfor
+                      @endif
+                    </p>
                     </div>
                     <div class="col-lg-12">
-                      <p class="reference-font"><strong>Reference: Any Reference</strong></p>
+                      <p class="reference-font"><strong>Reference: {{$tender->ref_no}}</strong></p>
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-12">
                     <div class="col-lg-12 col-md-12 due-date-setting">
-                      <p style="font-size:12px;color: #0d6efd!important;">Due Date: 3-21-2021</p>
+                      <p style="font-size:12px;color: #0d6efd!important;">Due Date: {{date('m-d-Y', strtotime($tender->due_date))}}</p>
                     </div>
                     
                   </div>
@@ -243,254 +254,25 @@
               <div class="card-footer-outer-wrapper">
                 <div class="row pt-1">
                   <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> Riadh</p>
+                    <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> {{$tender->user->user_detail->city_name}}</p>
                   </div>
                   <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<strong  class="text-primary">10 Times</strong></p>
+                    <p>Seen<strong  class="text-primary"> {{$tender->seen}} Times</strong></p>
                   </div>
                   <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                     <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
                   </div>
                   <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
+                    @if($tender->due_date >= now())
                     <button class="btn btn-secondary running-button">Running</button>
+                    @endif
                     <button class="btn btn-secondary approved">Extend Date</button>
                   </div>
                 </div>
               </div>
               
             </div>
-
-
-            <div class="card-left">
-              <div class="card-body card-padding">
-                <div class="row ">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    <p class="see-10-time">Seen <strong class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    
-                    <button class="btn btn-warning button-setting-closed">Closed</button>
-                  </div>
-                  
-                </div>
-                <div class="row mt-3 ">
-                  <div class="col-lg-4 col-md-12">
-                    <div class="row">
-                      <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
-                      </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/company logo1.svg')}}" class="es-image rounded-circle">
-                        
-                      </div>
-                      <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding:0px">
-                        <p class="es-para">Company</p>
-                      </div>
-                      
-                    </div>
-                    
-                  </div>
-                  <div class="col-lg-5 col-md-12 card-inner-seeting">
-                    <div class="col-lg-12">
-                      <h6 class="furniture-font">Furniture (Tender Title)</h6>
-                    </div>
-                    <div class="col-lg-12">
-                      <p style="color: #0d6efd!important;font-style: italic;">1. Item name 2. Item Name</p>
-                    </div>
-                    <div class="col-lg-12">
-                      <p class="reference-font"><strong>Reference: Any Reference</strong></p>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-12">
-                    <div class="col-lg-12 col-md-12 due-date-setting">
-                      <p style="font-size:12px;color: #0d6efd!important;">Due Date: 3-21-2021</p>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-
-              <div class="row Line-73-padding">
-              <div class="col-lg-12">
-                <div class="Line-73"></div>
-              </div>  
-              </div>
-              
-              
-              <div class="card-footer-outer-wrapper">
-                <div class="row pt-1">
-                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> Riadh</p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<strong  class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
-                    
-                    <button class="btn btn-secondary approved">Extend Date</button>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-
-            <div class="card-left">
-              <div class="card-body card-padding">
-                <div class="row ">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    <p class="see-10-time">Seen <strong class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    
-                    <button class="btn btn-warning paid-button">Paid</button>
-                  </div>
-                  
-                </div>
-                <div class="row mt-3 ">
-                  <div class="col-lg-4 col-md-12">
-                    <div class="row">
-                      <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
-                      </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/company logo1.svg')}}" class="es-image rounded-circle">
-                        
-                      </div>
-                      <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding:0px">
-                        <p class="es-para">Company</p>
-                      </div>
-                      
-                    </div>
-                    
-                  </div>
-                  <div class="col-lg-5 col-md-12 card-inner-seeting">
-                    <div class="col-lg-12">
-                      <h6 class="furniture-font">Furniture (Tender Title)</h6>
-                    </div>
-                    <div class="col-lg-12">
-                      <p style="color: #0d6efd!important;font-style: italic;">1. Item name 2. Item Name</p>
-                    </div>
-                    <div class="col-lg-12">
-                      <p class="reference-font"><strong>Reference: Any Reference</strong></p>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-12">
-                    <div class="col-lg-12 col-md-12 due-date-setting">
-                      <p style="font-size:12px;color: #0d6efd!important;">Due Date: 3-21-2021</p>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-
-              <div class="row Line-73-padding">
-              <div class="col-lg-12">
-                <div class="Line-73"></div>
-              </div>  
-              </div>
-              
-              
-              <div class="card-footer-outer-wrapper">
-                <div class="row pt-1">
-                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> Riadh</p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<strong  class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
-                    
-                    <button class="btn btn-secondary approved1">Approved</button>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-
-            <div class="card-left">
-              <div class="card-body card-padding">
-                <div class="row ">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    <p class="see-10-time">Seen <strong class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                    
-                    <button class="btn btn-warning button-setting-closed">UnPaid</button>
-                  </div>
-                  
-                </div>
-                <div class="row mt-3 ">
-                  <div class="col-lg-4 col-md-12">
-                    <div class="row">
-                      <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
-                      </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/company logo1.svg')}}" class="es-image rounded-circle">
-                        
-                      </div>
-                      <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding:0px">
-                        <p class="es-para">Company</p>
-                      </div>
-                      
-                    </div>
-                    
-                  </div>
-                  <div class="col-lg-5 col-md-12 card-inner-seeting">
-                    <div class="col-lg-12">
-                      <h6 class="furniture-font">Furniture (Tender Title)</h6>
-                    </div>
-                    <div class="col-lg-12">
-                      <p style="color: #0d6efd!important;font-style: italic;">1. Item name 2. Item Name</p>
-                    </div>
-                    <div class="col-lg-12">
-                      <p class="reference-font"><strong>Reference: Any Reference</strong></p>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-12">
-                    <div class="col-lg-12 col-md-12 due-date-setting">
-                      <p style="font-size:12px;color: #0d6efd!important;">Due Date: 3-21-2021</p>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-
-              <div class="row Line-73-padding">
-              <div class="col-lg-12">
-                <div class="Line-73"></div>
-              </div>  
-              </div>
-              
-              
-              <div class="card-footer-outer-wrapper">
-                <div class="row pt-1">
-                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/Group 16933.png')}}"   class="rounded-circle img-fluid"> Riadh</p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<strong  class="text-primary">10 Times</strong></p>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                    <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
-                    
-                    <button class="btn btn-secondary approved1">Approved</button>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
+            @endforeach
 
 
           </div>
