@@ -107,7 +107,7 @@ if(data != "")
   } else {
     sow = "";
   }
-  console.log(data)
+ console.log(data)
   let document = $("#document_name").val();
   let document_file = $("#document_file").val();
   let tender_id = $("#tender_id").val();
@@ -191,4 +191,13 @@ $('.step_three').on('click',function(e){
         },
       });
 
+});
+
+$('input[name="yes11"]').click(function(){
+    console.log($("input[name=yes11]:checked").val());
+    if ($("input[name=yes11]:checked").val() == 'off') {
+        $('#UploadBox').attr( "style", "display: none !important;" );
+      } else {
+        $('#UploadBox').attr( "style", "display: flex !important;" );
+      }
 });

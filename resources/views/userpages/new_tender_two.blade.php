@@ -62,7 +62,7 @@
 
             <div class="new-order-container-step">
                 <div>
-                    <a href="/new_tender_third_tab"><img src="{{asset('asset/images/Group 16935.png')}}" alt="" width="70%" height="auto"></a>
+                    <a href="/new_tender_two"><img src="{{asset('asset/images/Group 16935.png')}}" alt="" width="70%" height="auto"></a>
                 </div>
                 <div>
                     <div>
@@ -157,7 +157,7 @@
                                 <label for="yes">Yes</label>
                             </div>
                             <div>
-                                <input type="radio" {{ (($tenderItems->sow ?? '') == 'on')? "checked" : "" }} name="yes11" id="yes">
+                                <input type="radio" value="on" {{ (($tenderItems->sow ?? '') == 'on')? "checked" : "" }} name="yes11" id="yes">
                             </div>
                         </div>
                         <div class=" h5 d-flex gap-2">
@@ -165,7 +165,7 @@
                                 <label for="no">No</label>
                             </div>
                             <div>
-                                <input type="radio" {{ (($tenderItems->sow ?? '') == 'off')? "checked" : "" }} name="yes11" id="no">
+                                <input type="radio" value="off" {{ (($tenderItems->sow ?? '') == 'off')? "checked" : "" }} name="yes11" id="no">
                             </div>
 
                         </div>
@@ -178,7 +178,7 @@
 
                 </div>
 
-                <div class="TEXT-COLOR fw-bold d-flex gap-4 mt-4 flex-column  flex-md-row ">
+                <div class="TEXT-COLOR fw-bold d-flex gap-4 mt-4 flex-column  flex-md-row " style="display: none !important" id="UploadBox">
                     <div>
 
                         <div>

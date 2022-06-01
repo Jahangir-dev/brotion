@@ -375,7 +375,7 @@ class UserController extends Controller
 
 
 public function market_place(Request $request){
-
+  
     $setting=FooterSetting::first();
     if(Auth::check()){
     $category=OpportunityCategory::get();
@@ -458,7 +458,7 @@ public function market_place(Request $request){
     $datediff =$your_date - $now  ;
     $o->due_date= round($datediff / (60 * 60 * 24)) ;
     }
-
+    
     return view('userpages.marketplace',compact('opportunity','category','setting'));
     }
 

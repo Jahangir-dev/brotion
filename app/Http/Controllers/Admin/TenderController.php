@@ -66,14 +66,23 @@ class TenderController extends Controller
 
     public function twosave(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'sow'              => 'required',
-            'document'         => 'required',
-    
-        ],[
-            'unique' => ':attribute already exist',
-            'required' => 'The :attribute field is required.'
-        ]);
+        if($request['sow'] == 'on')
+        {
+            $validator = Validator::make($request->all(), [
+                'sow'              => 'required',
+                'document'         => 'required',
+        
+            ],[
+                'required' => 'The :attribute field is required.'
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'sow'              => 'required'
+            ],[
+                'required' => 'The :attribute field is required.'
+            ]);
+        }
+       
 
         if($validator->fails()){
             return response()->json($validator->errors(), 404);      
