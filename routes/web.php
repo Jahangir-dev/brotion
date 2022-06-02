@@ -189,9 +189,9 @@ Route::get('print-opportunity-detail/{id}', [UserController::class, 'print_oppor
 //new page design of brotion routes
 
             
-Route::get('user-opportunity-detail', [UserController::class, 'user_opportunity_detail'])->name('user-opportunity-detail');
+Route::get('user-opportunity-detail/{id}', [UserController::class, 'user_opportunity_detail'])->name('user-opportunity-detail');
 
-Route::get('new-opportunity-detail', [UserController::class, 'new_opportunity_detail'])->name('new-opportunity-detail');
+Route::get('new-opportunity-detail/{id}', [UserController::class, 'new_opportunity_detail'])->name('new-opportunity-detail');
 
 Route::get('approve-this-bid', [UserController::class, 'approve_this_bid'])->name('approve-this-bid');
 
