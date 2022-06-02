@@ -266,7 +266,7 @@
                     @if($tender->due_date >= now())
                     <button class="btn btn-secondary running-button">Running</button>
                     @endif
-                    <button class="btn btn-secondary approved">Extend Date</button>
+                    <button class="btn btn-secondary approved" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
                   </div>
                 </div>
               </div>
@@ -278,7 +278,28 @@
           </div>
         </div>
       </div>
-
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Extend Date</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          <form method="post" action="{{url('extend_date')}}">
+              <div class="modal-body">
+                      <input type="hidden" id="idDate" name="id" value=""/>
+                      @csrf
+                      <input type="date" class="form-control" name="date" value="" required/>
+                    
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
     </section>
     <section>
       <div class="container">
@@ -382,7 +403,17 @@
             });
         });
     </script>
-
+    <script>
+      $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var recipient = button.data('whatever'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+       
+        $('#idDate').val(recipient);
+        //modal.find('.modal-body input').val(recipient);
+    });
+    </script>
 
   </body>
 </html>

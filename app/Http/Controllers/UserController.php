@@ -145,7 +145,7 @@ class UserController extends Controller
     $opp_awarded_count = Tender::where('user_id', Auth::user()->id)->where('complete', '=', 1)->count();
     $opp_pending_count = Tender::where('user_id', Auth::user()->id)->where('complete', '=', 0)->count();
 
-    $opportunity = Tender::select();
+    $opportunity = Tender::select()->where('complete',1);
     // $opportunity = UserOpportunity::select();
 
     if ($request->has('data') && $request->data == 'yes') {
@@ -153,11 +153,6 @@ class UserController extends Controller
     } elseif ($request->has('data') && $request->data == 'no') {
       $opportunity = $opportunity->where('user_id', '!=', Auth::user()->id);
     }
-
-
-
-
-
 
 
     if ($request->has('type') && $request->type == 'SmallValue') {
@@ -374,7 +369,7 @@ class UserController extends Controller
     $setting = FooterSetting::first();
     if (Auth::check()) {
       $category = OpportunityCategory::get();
-      $opportunity = Tender::select();
+      $opportunity = Tender::select()->where('complete',1);
 
       if ($request->has('data') && $request->data == 'yes') {
         $opportunity = $opportunity->where('user_id', '=', Auth::user()->id);
@@ -861,13 +856,14 @@ $opportunity = $opportunity->where('tender_category', $request->category);
 
   public function new_opportunity_detail($id)
   {
-    $tender = Tender::where('id', $id)->first();
-    if(!$tender)
-    {
-      return redirect()->back()->with('warning', 'Data not found');
-    }
-    $setting = FooterSetting::first();
-    return view('userpages.new_opportunity_detail', compact('setting', 'tender'));
+      Tender::where('id', $id)->increment('seen');
+      $tender = Tender::where('id', $id)->first();
+      if(!$tender)
+      {
+        return redirect()->back()->with('warning', 'Data not found');
+      }
+      $setting = FooterSetting::first();
+      return view('userpages.new_opportunity_detail', compact('setting', 'tender'));
   }
 
 
