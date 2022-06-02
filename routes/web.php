@@ -30,6 +30,8 @@ Route::post('new_tender_two_save',[TenderController::class, 'twosave'])->name('n
 Route::get('new_tender_third_tab/{id}',[TenderController::class, 'new_tender_third_tab'])->name('new_tender_third_tab');
 Route::post('new_tender_third_tab/save',[TenderController::class, 'threesave']);
 
+Route::post('extend_date',[TenderController::class, 'extend_date']);
+
 Route::get('/new_tender_three', function () {
         return view('userpages.new_tender_three');
         });

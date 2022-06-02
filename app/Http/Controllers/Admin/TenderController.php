@@ -153,4 +153,13 @@ class TenderController extends Controller
             mkdir($path, 0755, true);
         }
     }
+
+    public function extend_date(Request $request)
+    {
+        //dd($request['date']);
+        Tender::find($request['id'])->update(['due_date' => $request['date']]);
+        toast('Date Extended Updated Successfully', 'success');
+        return redirect()->back();
+        dd($request);
+    }
 }
