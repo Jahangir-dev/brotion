@@ -132,7 +132,7 @@
                     <div class="rt-container">
                       <div class="col-rt-12">
                         <div class="Scriptcontent">
-                          
+  
                           <!-- partial:index.partial.html -->
                           <ul class="timeline">
                             <li data-year="{{$opportunity_details->created_at->format('Y-m-d')}}"  data-text="Publish Date."></li>

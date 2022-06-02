@@ -46,10 +46,10 @@
         <div class="col-lg-6 col-md-7 col-sm-12 pt-3  d-block ">
           <div class="outer-wrapper">
             
-         <h1 class="text-white">Brief Overview of the Services</h1>
-         <p class="text-white">In publishing and graphic design, Lorem ipsum is a placeholder
-           text commonly used to demonstrate the visual form of a document
-           or a typeface without</p>
+          <h1 class="text-white">Brief Overview of the Services</h1>
+          <p class="text-white">In publishing and graphic design, Lorem ipsum is a placeholder
+            text commonly used to demonstrate the visual form of a document
+            or a typeface without</p>
            <button  class="btn text-white buttoncolor">Open Opportunities</button>
            <img class="img-fluid p-2 image-width" src="{{asset('asset/images/Icon ionic-ios-play-circle 1.svg')}}">
           </div>

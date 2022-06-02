@@ -11,6 +11,9 @@
     <title>Opportunity Mangement</title>
     
   </head>
+  <style>
+        .dot {background: blueviolet !important;}
+  </style>
   <body>
     <section style="background-color:#1c76b9;">
       @include('frontendtemplate.navbarn')
@@ -99,17 +102,43 @@
                   <img src="{{asset('asset/images/1280px-Test-Logo.svg.svg')}}" class="card-side-logo img-fluid" >
                 </div>
                 <div class="col-lg-9">
+                <?php 
+                            $future = strtotime($tender->due_date);
+                            $now = time();
+                            $timeleft = $future-$now;
+                            $daysleft = round((($timeleft/24)/60)/60);
+
+                            $daysleft = $daysleft/5;
+
+                            $date_now = new DateTime();
+                            $date2    = new DateTime($tender->created_at);
+                            
+                            $nowDate = false;
+                            
+                            if ($date_now >= $date2) {
+                                  $nowDate = true;
+                            }
+                          ?>
+                  
                   <div class="Scriptcontent">
+                    
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
+                      <li data-text="Publish Date." @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      
+                      <li data-year="" @if($daysleft >= 2) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1 && $daysleft < 1.5) class="dot" @endif></li>
+                      
+                      <li data-year="" @if($daysleft >= 0.5 && $daysleft < 1) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft > 0 && $daysleft < 0.5) class="dot" @endif></li>
+                      
+                      <li @if($daysleft == 0 && $daysleft < 0) class="dot" @endif data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
+                      
+                      
+                      
+                      
                     </ul>
                     <!-- partial -->
                   </div>

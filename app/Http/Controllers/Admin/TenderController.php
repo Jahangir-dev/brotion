@@ -156,10 +156,8 @@ class TenderController extends Controller
 
     public function extend_date(Request $request)
     {
-        //dd($request['date']);
         Tender::find($request['id'])->update(['due_date' => $request['date']]);
-        toast('Date Extended Updated Successfully', 'success');
+        toast('Date Extended Successfully', 'success');
         return redirect()->back();
-        dd($request);
     }
 }
