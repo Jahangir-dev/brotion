@@ -183,22 +183,22 @@
             </div>
             <form>
               <div class="row mt-3 mb-3 lastrow">
-                <div class="col-xl-1 col-lg-2 col-md-3 col-6">
+                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
                   <label class="price-proposal-vat-label">Price</label>
                   <div>
-                    <input type="text" name="price" class="form-control input-setting">
+                    <input type="number" name="price" value="" class="form-control input-setting">
                   </div>
                 </div>
-                <div class="col-xl-2 col-lg-3 col-md-3 col-6">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-6">
                   <label class="price-proposal-vat-label">Proposal</label>
                   <div>
                     <input type="file" name="proposal" class="form-control input-setting1">
                   </div>
                 </div>
-                <div class="col-xl-1 col-lg-2 col-md-3 col-6">
+                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
                   <label class="price-proposal-vat-label">VAT</label>
                   <div>
-                    <input type="text" name="vat" class="form-control input-setting" >
+                    <input type="number" name="vat" value="" class="form-control input-setting" >
                   </div>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-3 col-6">
