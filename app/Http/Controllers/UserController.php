@@ -636,26 +636,36 @@ $opportunity = $opportunity->where('tender_category', $request->category);
     $user_id = Auth::user()->id;
     $category = OpportunityCategory::get();
 
-    $opportunity = OpportunityDocument::select();
+    $opportunity = Tender::select();
+    $opportunity = $opportunity->whereHas('bids', function($q){
+      $q->where('user_id', Auth::user()->id);
+      // $q->where('approved', 1);
+    });
 
     if (isset($request->category)) {
       $search = $request->category;
-
       $opportunity = $opportunity->whereHas('category', function ($query) use ($search) {
-        $query->where('category_id', 'like', '%' . $search . '%');;
+        $query->where('id', $search);;
       });
     }
     if (isset($request->opp_title)) {
       $search = $request->opp_title;
-      $opportunity = $opportunity->whereHas('opp_detail.user_opp_title', function ($query) use ($search) {
-        $query->where('opp_title', 'like', '%' . $search . '%');;
-      });
+      $opportunity->where('tender_title', 'like', '%'.$search.'%');
     }
 
 
 
-    if ($request->has('sortby') && $request->sortby == 'date') {
+    if ($request->has('sortby') && $request->sortby == 'Oldest') {
       $opportunity = $opportunity->orderBy('created_at', 'Asc');
+    }
+    if ($request->has('sortby') && $request->sortby == 'Newest') {
+      $opportunity = $opportunity->orderBy('created_at', 'Desc');
+    }
+    if ($request->has('sortby') && $request->sortby == 'Assending') {
+      $opportunity = $opportunity->orderBy('id', 'asc');
+    }
+    if ($request->has('sortby') && $request->sortby == 'Descending') {
+      $opportunity = $opportunity->orderBy('id', 'desc');
     }
 
 
@@ -677,26 +687,26 @@ $opportunity = $opportunity->where('tender_category', $request->category);
 
 
 
-    $opportunity = $opportunity->where('bidding_user_id', Auth::user()->id)->with('user_detail', 'opp_detail.user', 'opp_count')->with('opp_detail.user_opp_title', 'opt_not_required')->orderBy('id', 'Desc')->paginate(6);
+    $opportunity = $opportunity->with('user')->paginate(6);
 
 
 
 
-    foreach ($opportunity as $o) {
-      $now = time();
-      $your_date = strtotime($o->opp_detail->due_date);
-      $datediff = $your_date - $now;
-      $o->due_date = round($datediff / (60 * 60 * 24));
-    }
+    // foreach ($opportunity as $o) {
+    //   $now = time();
+    //   $your_date = strtotime($o->opp_detail->due_date);
+    //   $datediff = $your_date - $now;
+    //   $o->due_date = round($datediff / (60 * 60 * 24));
+    // }
 
-    $bid_count = OpportunityDocument::where('bidding_user_id', Auth::user()->id)->count();
-    $bid_award = OpportunityDocument::where('bidding_user_id', Auth::user()->id)->where('status', '=', 1)->count();
-    if ($bid_award != 0) {
-      $average = ($bid_award / $bid_count) * 100;
-    } else {
-      $average = 0;
-    }
-    return view('userpages.bid_management', compact('opportunity', 'bid_count', 'bid_award', 'average', 'category', 'setting'));
+    // $bid_count = OpportunityDocument::where('bidding_user_id', Auth::user()->id)->count();
+    // $bid_award = OpportunityDocument::where('bidding_user_id', Auth::user()->id)->where('status', '=', 1)->count();
+    // if ($bid_award != 0) {
+    //   $average = ($bid_award / $bid_count) * 100;
+    // } else {
+    //   $average = 0;
+    // }
+    return view('userpages.bid_management', compact('opportunity', 'category'));
   }
 
   public function bidding_opportunity_details($id, $opp_id)

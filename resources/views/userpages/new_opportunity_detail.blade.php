@@ -100,6 +100,41 @@
             </div>
           </div>
           <div class="col-lg-9 left-part col-md-8">
+            <div class="row mb-3">
+            @if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('warning'))
+<div class="alert alert-warning alert-block">
+	<strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('info'))
+<div class="alert alert-info alert-block">
+	<strong>{{ $message }}</strong>
+</div>
+@endif
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+    <div class="alert alert-danger alert-block">
+        <strong>{{ $error }}</strong>
+</div>
+    @endforeach
+@endif
+            </div>
             <div class="card custom-card">
               <div class="row">
                 <div class="col-lg-3">
@@ -181,28 +216,30 @@
               </div>
               
             </div>
-            <form>
+            <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">
+              @csrf
+              <input type="hidden" name="tender_id" value="{{$tender->id}}"/>
               <div class="row mt-3 mb-3 lastrow">
                 <div class="col-xl-3 col-lg-2 col-md-3 col-6">
                   <label class="price-proposal-vat-label">Price</label>
                   <div>
-                    <input type="number" name="price" value="" class="form-control input-setting">
+                    <input required type="number" name="price" value="" class="form-control input-setting">
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-6">
                   <label class="price-proposal-vat-label">Proposal</label>
                   <div>
-                    <input type="file" name="proposal" class="form-control input-setting1">
+                    <input type="file" required name="document" class="form-control input-setting1">
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 col-6">
                   <label class="price-proposal-vat-label">VAT</label>
                   <div>
-                    <input type="number" name="vat" value="" class="form-control input-setting" >
+                    <input type="number"  name="vat" value="" class="form-control input-setting" >
                   </div>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-3 col-6">
-                  <button class="btn btn-primary save-button">Send</button>
+                  <button type="submit" class="btn btn-primary save-button">Send</button>
                   
                 </div>
               </div>

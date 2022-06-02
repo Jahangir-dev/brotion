@@ -100,15 +100,15 @@
                     <h1>Filter by:</h1>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="all" class="check-box qualifiactionclass" name="data" value="all">
+                    <input type="checkbox" id="all" class="check-box qualifiactionclass left-filters" name="data" value="1">
                     <label for="all" class="label-card"> Approved</label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="yes" class="check-box qualifiactionclass" name="data" value="yes">
+                    <input type="checkbox" id="yes" class="check-box qualifiactionclass left-filters" name="data" value="1">
                     <label for="yes" class="label-card"> Pending </label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
+                    <input type="checkbox" id="no" class="check-box qualifiactionclass left-filters" name="data" value="1">
                     <label for="no" class="label-card">Lost</label>
                   </div>
                 </form>
@@ -132,12 +132,22 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-7 col-sm-12">
+            @if(count($opportunity))
+            @foreach($opportunity as $tender)
             <div class="card-left">
               <div class="card-body card-padding">
                 <div class="row card-button">
                   <div class="col-lg-12">
-                    <p class="btn button-setting">1000</p>
-                    <p class="btn btn-warning button-setting-closed">Closed</p>
+                    <p class="btn button-setting">{{$tender->bids[0]->price}}</p>
+                    <p class="btn btn-warning button-setting-closed">
+                    @if($tender->due_date < now())
+                    Closed 
+                    @elseif($tender->bids[0]->approved)
+                    Live
+                    @else
+                    Running
+                    @endif
+                  </p>
                   </div>
                   
                 </div>
@@ -145,14 +155,14 @@
                   <div class="col-lg-4 col-md-12">
                     <div class="row card_two_iner_row">
                       <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
+                        <img src="{{$tender->user->profile_photo_path}}" class="table-img">
                       </div>
                       <div class="col-lg-4 px-0 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/es.png')}}" class="es-image rounded-circle">
+                        <img src="{{$tender->user->user_detail->company_logo}}" class="es-image rounded-circle">
                         
                       </div>
                       <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding: 0px">
-                        <p class="es-para">Company</p>
+                        <p class="es-para">{{$tender->user->user_detail->company_name}}</p>
                       </div>
                       
                     </div>
@@ -160,23 +170,30 @@
                   </div>
                   <div class="col-lg-5 col-md-12 card-inner-seeting">
                     <div class="col-lg-12 px-0">
-                      <h6 class="furniture-font">Furniture (Tender Title)</h6>
+                      <h6 class="furniture-font">{{$tender->tender_title}}</h6>
                     </div>
                     <div class="card-items">
                       <div class="card-item1">
-                      <p><strong>1.</strong> <i>Item name</i></p>
-                    </div>
-                      <div class="card-item2">
-                      <p><strong>2.</strong> <i>Item name</i></p>
+                      <p>
+                      @if($tender->items)
+                      @php
+                      $items = json_decode($tender->items->items, true);
+                      $count = count($items)/3;
+                      @endphp
+                      @for($i=1;$i<=$count;$i++)
+                        {{$i.'.'.$items['item'.$i]. ' '}}
+                      @endfor
+                      @endif
+                      </p>
                     </div>
                     </div>
                     <div class="col-lg-12 px-0">
-                      <p class="reference-font">Reference: Any Reference</p>
+                      <p class="reference-font">Reference: {{$tender->ref_no}}</p>
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-12 Date-para-col">
                     <div class="col-lg-12 col-md-12">
-                      <p class="Date-para"><i>Due Date:</i>   3-21-2021</p>
+                      <p class="Date-para"><i>Due Date:</i>   {{date('d-m-Y', strtotime($tender->due_date))}}</p>
                     </div>
                     
                   </div>
@@ -190,94 +207,23 @@
               <div class="card-footer-outer-wrapper">
                 <div class="row card-last-row pt-1">
                   <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p class="Riadh"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid"><span>Riadh</span></p>
+                    <p class="Riadh"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid"><span>{{$tender->user->user_detail->city_name}}</span></p>
                   </div>
                   <div class="col-lg-2 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<span>10 Times</span></p>
+                    <p>Seen<span>{{$tender->seen}} Times</span></p>
                   </div>
                   <div class="col-lg-2 col-md-6 col-sm-6 col-6">
                     <p class="Sahre" style="  color: #484848;"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid"><span>Share</span></p>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                    <p class="btn approved-button">Approved</p>
+                    <p class="btn approved-button">{{$tender->bids[0]->approved ? 'Approved' : ($tender->due_date < now() ? 'Lost' : 'Pending')}}</p>
                   </div>
                 </div>
               </div>
               
             </div>
-            <div class="card-left">
-              <div class="card-body card-padding">
-                <div class="row card-button">
-                  <div class="col-lg-12">
-                    <p class="btn button-setting">1000</p>
-                    <p class="btn btn-warning button-setting-closed">Closed</p>
-                  </div>
-                  
-                </div>
-                <div class="row row-responsive mt-3">
-                  <div class="col-lg-4 col-md-12">
-                    <div class="row card_two_iner_row">
-                      <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/table.png')}}" class="table-img">
-                      </div>
-                      <div class="col-lg-4 px-0 col-md-4 col-sm-4 col-4">
-                        <img src="{{asset('asset/images/es.png')}}" class="es-image rounded-circle">
-                        
-                      </div>
-                      <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding: 0px">
-                        <p class="es-para">Company</p>
-                      </div>
-                      
-                    </div>
-                    
-                  </div>
-                  <div class="col-lg-5 col-md-12 card-inner-seeting">
-                    <div class="col-lg-12 px-0">
-                      <h6 class="furniture-font">Furniture (Tender Title)</h6>
-                    </div>
-                    <div class="card-items">
-                      <div class="card-item1">
-                      <p><strong>1.</strong> <i>Item name</i></p>
-                    </div>
-                      <div class="card-item2">
-                      <p><strong>2.</strong> <i>Item name</i></p>
-                    </div>
-                    </div>
-                    <div class="col-lg-12 px-0">
-                      <p class="reference-font">Reference: Any Reference</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-12 Date-para-col">
-                    <div class="col-lg-12 col-md-12">
-                      <p class="Date-para"><i>Due Date:</i>   3-21-2021</p>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="Line-73"></div>
-              </div>
-              
-              <div class="card-footer-outer-wrapper">
-                <div class="row card-last-row pt-1">
-                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p class="Riadh"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid"><span>Riadh</span></p>
-                  </div>
-                  <div class="col-lg-2 col-md-6 col-sm-6 see-times col-6">
-                    <p>Seen<span>10 Times</span></p>
-                  </div>
-                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p class="Sahre" style="  color: #484848;"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid"><span>Share</span></p>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                    <p class="btn approved-button">Approved</p>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
+            @endforeach
+            @endif
 
             
             
@@ -339,6 +285,17 @@
     </script> -->
     <script type="text/javascript">
     $(function(){
+      $('.left-filters').on('change', function(){
+        $('.left-filters').each(function(i, obj) {
+          if($(this).is(':checked'))
+          {
+            
+          }
+          var URLSearchParams = window.location.href.searchParams;
+          console.log(URLSearchParams);
+          console.log($(this).is(':checked'));
+        });
+      });
     $('.opptype').on('change',function(){
     $('#opptype').submit();
     });

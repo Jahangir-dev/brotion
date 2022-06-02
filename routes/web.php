@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\TenderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BidController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -177,6 +178,9 @@ Route::get('opportunity-title-search', [UserController::class, 'opportunity_titl
 
 Route::get('opportunity-details/{id}', [UserController::class, 'opportunity_details'])->name('opportunity-details');
 
+Route::any('download-proposal/{id}', [BidController::class, 'downloadProposal'])->name('download-proposal');
+Route::any('approve-bid/{id}', [BidController::class, 'approveBid'])->name('approveBid');
+Route::post('save-bid', [BidController::class, 'saveBid'])->name('saveBid');
 Route::post('opportunity-details-documents-save', [UserController::class, 'opportunity_details_documents_save'])->name('opportunity-details-documents-save');
 Route::get('market-place', [UserController::class, 'market_place'])->name('market-place');
 
@@ -188,7 +192,6 @@ Route::get('print-opportunity-detail/{id}', [UserController::class, 'print_oppor
 
 //new page design of brotion routes
 
-            
 Route::get('user-opportunity-detail/{id}', [UserController::class, 'user_opportunity_detail'])->name('user-opportunity-detail');
 
 Route::get('new-opportunity-detail/{id}', [UserController::class, 'new_opportunity_detail'])->name('new-opportunity-detail');

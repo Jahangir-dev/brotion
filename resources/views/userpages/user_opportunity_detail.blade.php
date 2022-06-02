@@ -158,12 +158,16 @@
                 <h3>Approve on bid on the Opportunity</h3>
               </div>
             </div>
+            @if(count($tender->bids))
+            @foreach($tender->bids as $bid)
             <div class="row mt-md-5">
               <div class="col-lg-4 col-md-5 col-sm-5">
                 <div class="outer-wrapper-bidder">
                   <label><b style="color: #1C76B9;">1.</b></label>
-                  <img src="{{asset('asset/images/company logo1.svg')}}" class="image-setting-es rounded-circle">
-                  <label class="bider-name">Bidder Name</label>
+                  @if($bid->bidder->user_detail->company_logo != "")
+                  <img style="width: 60px;" src="{{$bid->bidder->user_detail->company_logo}}" class="image-setting-es rounded-circle">
+                  @endif
+                  <label class="bider-name">{{$bid->bidder->name}}</label>
                 </div>
               </div>
               <div class="col-lg-6 col-md-7 col-sm-7">
@@ -174,86 +178,28 @@
                 </div>
                 <div class="outer-wrapper-ppv-bottom">
                   <div>
-                    <label>10000</label>
+                    <label>{{$bid->price}}</label>
                   </div>
                   <div>
-                    <label>Download Doc</label>
+                    <a type="button" href="{{route('download-proposal', ['id' => $bid->id])}}">Download Doc</a>
                   </div>
                   <div>
-                    <label>50</label>
+                    <label>{{$bid->vat}}</label>
                   </div>
                 </div>
               </div>
               <div class="col-lg-2">
                 <div class="outer-wrapper-button">
-    <a class="btn approve-button-bottom">Approve</a>
+                  @if($bid->approved)
+                  <button class="btn approve-button-bottom" disalbed>Approved</button>
+                  @else
+                  <a href="{{route('approveBid', ['id' => $bid->id])}}" class="btn approve-button-bottom">Approve</a>
+                  @endif
                 </div>
               </div>
             </div>
-            <div class="row mt-md-5 mt-3">
-              <div class="col-lg-4 col-md-5 col-sm-5">
-                <div class="outer-wrapper-bidder">
-                  <label><b style="color: #1C76B9;">2.</b></label>
-                  <img src="{{asset('asset/images/company logo1.svg')}}" class="image-setting-es rounded-circle">
-                  <label class="bider-name">Bidder Name</label>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-7 col-sm-7">
-                <div class="outer-wrapper-ppv">
-                <label>price</label>
-                  <label>Proposal</label>
-                  <label>VAT</label>
-                </div>
-                <div class="outer-wrapper-ppv-bottom">
-                  <div>
-                    <label>10000</label>
-                  </div>
-                  <div>
-                    <label>Download Doc</label>
-                  </div>
-                  <div>
-                    <label>50</label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-2">
-                <div class="outer-wrapper-button">
-    <a class="btn approve-button-bottom">Approve</a>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-md-5 mt-3">
-              <div class="col-lg-4 col-md-5 col-sm-5">
-                <div class="outer-wrapper-bidder">
-                  <label><b style="color: #1C76B9;">3.</b></label>
-                  <img src="{{asset('asset/images/company logo1.svg')}}" class="image-setting-es rounded-circle">
-                  <label class="bider-name">Bidder Name</label>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-7 col-sm-7">
-                <div class="outer-wrapper-ppv">
-                <label>price</label>
-                  <label>Proposal</label>
-                  <label>VAT</label>
-                </div>
-                <div class="outer-wrapper-ppv-bottom">
-                  <div>
-                    <label>10000</label>
-                  </div>
-                  <div>
-                    <label>Download Doc</label>
-                  </div>
-                  <div>
-                    <label>50</label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-2">
-                <div class="outer-wrapper-button">
-    <a class="btn btn-primary approve-button-bottom">Approve</a>
-                </div>
-              </div>
-            </div>
+            @endforeach
+            @endif
           </div>
         </div>
       </section>

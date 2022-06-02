@@ -95,4 +95,10 @@ class User extends Authenticatable
         return $this->hasMany(Tender::class);
         // return $this->hasMany('App\Models\Tender','user_id','id');
     }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class);
+        // return $this->hasMany('App\Models\Tender','user_id','id');
+    }
 }
