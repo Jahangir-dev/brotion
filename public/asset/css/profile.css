@@ -724,3 +724,14 @@ font-size: 2rem;
       }
       
   }
+.qestion-col a{
+  margin-top: 1rem;
+    border: 0.1rem solid #707070;
+    padding: 0.7rem 1rem;
+    color: #1C76B9;
+    border-radius: 0.5rem;
+    background-color: #E9EAEB;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Open Sans
+}

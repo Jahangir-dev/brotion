@@ -84,11 +84,10 @@ $(".step_one").on("click", function (e) {
     });
 });
 
-$('.step_two').on('click',function(e){
-  e.preventDefault();
+$("#product_form").on("submit", function() {
+  
   var data = {};
   $('.dynamic').each(function(index, item){
-      console.log(index)
       var id = $(item).attr('id');
       if($("#"+id).val() == "" || $("#"+id).val() == undefined)
       {
@@ -98,70 +97,68 @@ $('.step_two').on('click',function(e){
         data[id] = $("#"+id).val();
       }
       
-  });
-console.log(data)
-if(data != "")
-{
-  if ($("input[name=yes11]:checked").val()) {
-    sow = $("input[name=yes11]:checked").val();
-  } else {
-    sow = "";
-  }
- console.log(data)
-  let document = $("#document_name").val();
-  let document_file = $("#document_file").val();
-  let tender_id = $("#tender_id").val();
-  var data_to_send =JSON.stringify(data);
-  console.log(data_to_send);
-    $.ajax({
-      url: "new_tender_two_save",
-      type: "POST",
-      dataType: "json",
-      data: {
-          _token: $("input[name=_token]").val(),
-          sow: sow,
-          document: document,
-          document_file: document_file,
-          items: data_to_send,
-          tender_id:tender_id
-      },
-      success: function (response) {
-          if (response) {
-              window.location.href = "new_tender_third_tab/"+tender_id;
-          }
-      },
-      error: function (response) {
-          if (response.responseJSON.document) {
-              $("#document_name_error").text(
-                  response.responseJSON.document[0]
-              );
-          } else {
-              $("#document_name_error").text("");
-          }
-
-          if (response.responseJSON.ref_no) {
-              $("#document_file_error").text(response.responseJSON.document_file[0]);
-          } else {
-              $("#document_file_error").text("");
-          }
-
-          if (response.responseJSON.sow) {
-              $("#sow_error").text(
-                  response.responseJSON.sow[0]
-              );
-          } else {
-              $("#sow_error").text("");
-          }
-
-          if (response.responseJSON.data) {
-              $("#data_error").text(response.responseJSON.data[0]);
-          } else {
-              $("#data_error").text("");
-          }
-
-      },
     });
-}
+
+    if(data != "")
+    {
+        if ($("input[name=sow]:checked").val()) {
+            sow = $("input[name=sow]:checked").val();
+        } else {
+            sow = "";
+        }
+
+        // let document = $("#document_name").val();
+        // let document_file = $("#document_file").val();
+         let tender_id = $("#tender_id").val();
+        var data_to_send = JSON.stringify(data);
+        var form_data = new FormData(this);
+        form_data.append('items', data_to_send);
+        console.log(data_to_send);
+        $.ajax({
+        url: "new_tender_two_save",
+        type: "POST",
+        //dataType: "json",
+        contentType: false, // The content type used when sending data to the server.
+        cache: false, // To unable request pages to be cached
+        processData: false, //
+        data: form_data,
+        success: function (response) {
+            if (response) {
+                window.location.href = "new_tender_third_tab/"+tender_id;
+            }
+        },
+        error: function (response) {
+            if (response.responseJSON.document) {
+                $("#document_name_error").text(
+                    response.responseJSON.document[0]
+                );
+            } else {
+                $("#document_name_error").text("");
+            }
+
+            if (response.responseJSON.document_file) {
+                $("#document_file_error").text(response.responseJSON.document_file[0]);
+            } else {
+                $("#document_file_error").text("");
+            }
+
+            if (response.responseJSON.sow) {
+                $("#sow_error").text(
+                    response.responseJSON.sow[0]
+                );
+            } else {
+                $("#sow_error").text("");
+            }
+
+            if (response.responseJSON.data) {
+                $("#data_error").text(response.responseJSON.data[0]);
+            } else {
+                $("#data_error").text("");
+            }
+
+        },
+        });
+    }
 });
 
 $('.step_three').on('click',function(e){
@@ -193,11 +190,19 @@ $('.step_three').on('click',function(e){
 
 });
 
-$('input[name="yes11"]').click(function(){
-    console.log($("input[name=yes11]:checked").val());
-    if ($("input[name=yes11]:checked").val() == 'off') {
+$('input[name="sow"]').click(function(){
+    console.log($("input[name=sow]:checked").val());
+    if ($("input[name=sow]:checked").val() == 'off') {
         $('#UploadBox').attr( "style", "display: none !important;" );
       } else {
         $('#UploadBox').attr( "style", "display: flex !important;" );
       }
 });
+
+$('input[type="file"]').change(function(e) {
+    var fileName = e.target.files;
+    var file_data =document.getElementById('document_file').files[0];   
+    var form_data = new FormData();                  
+    form_data.append('file', file_data);
+    console.log(form_data);
+});  

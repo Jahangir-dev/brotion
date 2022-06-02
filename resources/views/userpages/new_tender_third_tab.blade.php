@@ -209,7 +209,10 @@
                 <div class="row">
                     <div class="col-12 qestion-col">
                         <h2>{{ (($tender->items['sow'] ?? '') == 'on')? "SOW" : "BOQ" }}</h2>
-                        <button class="btn" style="">File Name <i class="bi bi1 bi-download"></i></button>
+                        @if($tender->items['sow'] == 'on')
+                        <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items['document_file'];?>
+                            <a href="{{asset($uploadFolder)}}" download="{{$tender->items['document_file']}}" class="btn">File Name <i class="bi bi1 bi-download"></i></a>
+                        @endif
                     </div>
                 </div>
                 <div class="row">

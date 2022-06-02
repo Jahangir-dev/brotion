@@ -83,8 +83,7 @@
                     <label for="">Scope of work</label>
                 </div>
 
-                @csrf
-                <input type="hidden" id="tender_id" value="{{$tender->id ?? ''}}">
+                
                 <div class="new-order-container-bootom-part-content_Button mt-3">
                     <div>
                         <button class=" btn btn_green " onclick="add_more_field(this)">Add</button>
@@ -97,8 +96,9 @@
                 </div>
 
 
-                <form id="product_form">
-
+                <form method="post"  id="product_form" enctype="multipart/form-data" onSubmit="return false;">
+                    @csrf
+                    <input type="hidden" id="tender_id" name="tender_id" value="{{$tender->id ?? ''}}">
                     <div class="new-order-container-bootom-part-content_field text-color fw-bold mt-3" id="">
                         <div class="col-1 d-flex flex-column">
                             <div>
@@ -111,7 +111,7 @@
                             <div class="">
                                 <label class="fw-bold h5 TEXT-COLOR" for="item">Item</label>
                                 <div>
-                                    <input class="INPUT_MEDIUM dynamic" type="text" name="item1" id="item1">
+                                    <input class="INPUT_MEDIUM dynamic" type="text" id="item1">
                                 </div>
                                 
                             </div>
@@ -121,7 +121,7 @@
                                     <label class="fw-bold h5 TEXT-COLOR" for="descrpt"> Description</label>
                                 </div>
                                 <div>
-                                    <textarea class="dynamic" name="description" required="" id="descrpt1" cols="50" rows="3"></textarea>
+                                    <textarea class="dynamic" required="" name="" id="descrpt1" cols="50" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -130,7 +130,7 @@
                                     <label class="fw-bold h5 TEXT-COLOR" for="quality"> Quality</label>
                                 </div>
                                 <div>
-                                    <input class="INPUT_MEDIUM dynamic" required="" type="text" name="quality1" id="quality1">
+                                    <input class="INPUT_MEDIUM dynamic" required="" type="text" id="quality1">
                                 </div>
                             </div>
 
@@ -139,82 +139,78 @@
 
                     </div>
 
+                    <div class="TEXT-COLOR fw-bold mt-4" id="form_fields">
+                        <div class=" fw-bold">
+                            <h4>Do you have a SOW or BoQ</h4>
+                        </div>
+
+
+                        <div class="d-flex
+                                gap-4 mt-3">
+
+                            <div class="d-flex gap-2 h5">
+                                <div>
+                                    <label for="yes">Yes</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="sow" value="on" {{ (($tenderItems->sow ?? '') == 'on')? "checked" : "" }} id="yes">
+                                </div>
+                            </div>
+                            <div class=" h5 d-flex gap-2">
+                                <div>
+                                    <label for="no">No</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="sow" value="off" {{ (($tenderItems->sow ?? '') == 'off')? "checked" : "" }} id="no">
+                                </div>
+
+                            </div>
+                            <br>
+                                <span class="text-danger" id="sow_error"></span>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class="TEXT-COLOR fw-bold d-flex gap-4 mt-4 flex-column  flex-md-row " style="display: none !important" id="UploadBox">
+                        <div>
+
+                            <div>
+                                <label for="document_name">
+                                    Document Name
+                                </label>
+                            </div>
+                            <div>
+                                <input class="INPUT_MEDIUM" type="text" name="document" id="document_name">
+                            </div>
+                            <br>
+                                <span class="text-danger" id="document_name_error"></span>
+                        </div>
+
+                        <div class="">
+                            <div>
+                                <label for="uplode_button">
+                                    Uplode Bottom
+                                </label>
+                            </div>
+                            <div>
+                                <input class="TEXT-COLOR" type="file" name="document_file" id="document_file">
+                            </div>
+                            <br>
+                                <span class="text-danger" id="document_file_error"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="BUTTON-CONTAINER">
+                        <input class="BTN step_two" type="submit" value="Move Next">
+                            </input>
+
+
+                    </div>
                 </form>
-
-
-
-                <div class="TEXT-COLOR fw-bold mt-4">
-                    <div class=" fw-bold">
-                        <h4>Do you have a SOW or BoQ</h4>
-                    </div>
-
-
-                    <div class="d-flex
-                            gap-4 mt-3">
-
-                        <div class="d-flex gap-2 h5">
-                            <div>
-                                <label for="yes">Yes</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="on" {{ (($tenderItems->sow ?? '') == 'on')? "checked" : "" }} name="yes11" id="yes">
-                            </div>
-                        </div>
-                        <div class=" h5 d-flex gap-2">
-                            <div>
-                                <label for="no">No</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="off" {{ (($tenderItems->sow ?? '') == 'off')? "checked" : "" }} name="yes11" id="no">
-                            </div>
-
-                        </div>
-                        <br>
-                            <span class="text-danger" id="sow_error"></span>
-                    </div>
-
-
-
-
-                </div>
-
-                <div class="TEXT-COLOR fw-bold d-flex gap-4 mt-4 flex-column  flex-md-row " style="display: none !important" id="UploadBox">
-                    <div>
-
-                        <div>
-                            <label for="document_name">
-                                Document Name
-                            </label>
-                        </div>
-                        <div>
-                            <input class="INPUT_MEDIUM" type="text" name="" id="document_name">
-                        </div>
-                        <br>
-                            <span class="text-danger" id="document_name_error"></span>
-                    </div>
-
-                    <div class="">
-                        <div>
-                            <label for="uplode_button">
-                                Uplode Bottom
-                            </label>
-                        </div>
-                        <div>
-                            <input class="TEXT-COLOR" type="file" name="" id="document_file">
-                        </div>
-                        <br>
-                            <span class="text-danger" id="document_file_error"></span>
-                    </div>
-
-                </div>
-
-                <div class="BUTTON-CONTAINER">
-                     <button class="BTN step_two">Move Next
-                        </button>
-
-
-                </div>
-
 
 
             </div>
@@ -249,7 +245,7 @@
     <div class="">\
         <label class="fw-bold h5 TEXT-COLOR" for="item">Item</label>\
         <div>\
-            <input class="INPUT_MEDIUM dynamic" required="" type="text" name="product' + countre + '"  id="item' + countre + '">\
+            <input class="INPUT_MEDIUM dynamic" required="" type="text" name=""  id="item' + countre + '">\
         </div>\
     </div>\
     <div>\
@@ -257,7 +253,7 @@
             <label class="fw-bold h5 TEXT-COLOR" for=""> Description</label>\
         </div>\
         <div>\
-        <textarea class="TEXT-COLOR dynamic" required="" name="product' + countre + '"  id="descrpt' + countre + '" cols="50" rows="3"></textarea>\
+        <textarea class="TEXT-COLOR dynamic" required="" name=""  id="descrpt' + countre + '" cols="50" rows="3"></textarea>\
         </div>\
     </div>\
     <div>\
@@ -265,14 +261,15 @@
             <label class="fw-bold h5 TEXT-COLOR" for=""> Quality</label>\
         </div>\
         <div>\
-           <input class="INPUT_MEDIUM dynamic" type="text" required="" name="product' + countre + '"  id="quality' + countre + '">\
+           <input class="INPUT_MEDIUM dynamic" type="text" required="" name=""  id="quality' + countre + '">\
         </div>\
     </div>\
     </div>\
     </div>\
     '
             var form = document.getElementById('product_form')
-            form.innerHTML += html;
+            $(html).insertBefore($('#form_fields'))
+            //form.innerHTML += html;
         }
 
         function remove(button) {
