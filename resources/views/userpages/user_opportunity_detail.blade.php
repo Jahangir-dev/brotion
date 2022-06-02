@@ -26,17 +26,20 @@
           <div class="col-lg-3 col-md-4">
             <div class="col-lg-12 d-flex">
               <img src="{{asset('asset/images/Group 16892.svg')}}" class="img-fluid">
-              <h1 class="furniture-setting">Furniture</h1>
+              <h1 class="furniture-setting">{{$tender->tender_title}}</h1>
             </div>
             <div class="col-lg-12 reference-col">
-              <p class="reference-no">Reference No. <span class="reference-span">001</span></p>
+              <p class="reference-no">Reference No. <span class="reference-span">{{$tender->ref_no}}</span></p>
             </div>
             <div class="col-lg-12 mt-3 live-class mb-3">
-              <button class="btn live-button">Live</button>
-              <h5 class="reference-span">2 days to go</h5>
+              <button class="btn live-button">{{$tender->due_date < now() ? 'Closed' : 'Live'}}</button>
+              <h5 class="reference-span">
+                @if($tender->due_date >= now())
+              {{ round((strtotime($tender->due_date) - time()) / 86400) . ' days to go' }}  
+              @endif
             </div>
             <div class="col-lg-12 card-uper-para-col">
-              <p class="card-uper-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  et...</p>
+              <!-- <p class="card-uper-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  et...</p> -->
             </div>
             <div class="col-lg-12">
               <div class="card right-card">
@@ -46,43 +49,43 @@
                 <h1 class="right-card-headings">Publisher</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Consultation</p>
+                <p class="right-card-paras">{{$tender->user->name}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Publish date :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">3-21-2022</p>
+                <p class="right-card-paras">{{date('d-m-Y', strtotime($tender->created_at))}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Category :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Electronics</p>
+                <p class="right-card-paras">{{$tender->category->name}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery City :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Riyadh</p>
+                <p class="right-card-paras">{{$tender->delivery_city}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery deadline :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">3-30-2022</p>
+                <p class="right-card-paras">{{date('d-m-Y', strtotime($tender->due_date))}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Payment days :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">15 days</p>
+                <p class="right-card-paras">{{$tender->payment_days . ' days'}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Payment Type  : </h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Payment on delivery</p>
+                <p class="right-card-paras">{{$tender->payment_method}}</p>
                     </div>
                   </div>
                 </div>
@@ -99,13 +102,13 @@
                   <div class="Scriptcontent">
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." data-year="16 Des" ></li>
+                      <li data-text="Publish Date." data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
                       <li data-year=""></li>
                       <li data-year=""></li>
                       <li data-year=""></li>
                       <li data-year=""></li>
                       <li data-year=""></li>
-                      <li data-year="19  Des" data-text="Due Date."></li>
+                      <li data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
                     </ul>
                     <!-- partial -->
@@ -113,59 +116,43 @@
                 </div>
               </div>
             </div>
+            @if($tender->items)
+                      @php
+                      $items = json_decode($tender->items->items, true);
+                      $count = count($items)/3;
+                      @endphp
+                      @for($i=1;$i<=$count;$i++)
+                      
             <div class="row mt-3 item-setting">
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Item Name</label>
                 <div class="background-div-setting">
-                  <h1>Furniture</h1>
+                  <h1>{{$items['item'.$i]}}</h1>
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 col-sm-6">
                 <label class="Item-description">Description</label>
                 <div class="background-div-setting">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, .</p>
+                  <p>{{$items['descrpt'.$i]}}</p>
                 </div>
               </div>
               <div class="col-lg-2 col-md-6 col-sm-6 text-lg-end">
                 <label class="Item-quantity">Quantity</label>
                 <div class="background-div-quantity">
-                  <p>1</p>
+                  <p>{{$items['quality'.$i]}}</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
-                  <p>Doc Name</p>
+                  <p>{{$tender->items->document}}</p>
                 </div>
               </div>
             </div>
+            
             <hr class="items-mid-line">
-            <div class="row mt-3 item-setting">
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <label class="Item-names">Item Name</label>
-                <div class="background-div-setting">
-                  <h1>Furniture</h1>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 col-sm-6">
-                <label class="Item-description">Description</label>
-                <div class="background-div-setting">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, .</p>
-                </div>
-              </div>
-              <div class="col-lg-2 col-md-6 col-sm-6 text-lg-end">
-                <label class="Item-quantity">Quantity</label>
-                <div class="background-div-quantity">
-                  <p>1</p>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <label class="Item-names">Scope Of Work</label>
-                <div class="type-of-scope">
-                  <p>Doc Name</p>
-                </div>
-              </div>     
-            </div>
+            @endfor
+                      @endif
             <div class="row approve-top">
               <div class="col-lg-12">
                 <h3>Approve on bid on the Opportunity</h3>

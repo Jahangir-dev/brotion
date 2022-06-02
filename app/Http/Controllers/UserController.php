@@ -837,17 +837,27 @@ $opportunity = $opportunity->where('tender_category', $request->category);
     }
   }
 
-  public function user_opportunity_detail()
+  public function user_opportunity_detail($id)
   {
+    $tender = Tender::where('id', $id)->first();
+    if(!$tender)
+    {
+      return redirect()->back()->with('warning', 'Data not found');
+    }
     $setting = FooterSetting::first();
-    return view('userpages.user_opportunity_detail', compact('setting'));
+    return view('userpages.user_opportunity_detail', compact('setting', 'tender'));
   }
 
 
-  public function new_opportunity_detail()
+  public function new_opportunity_detail($id)
   {
+    $tender = Tender::where('id', $id)->first();
+    if(!$tender)
+    {
+      return redirect()->back()->with('warning', 'Data not found');
+    }
     $setting = FooterSetting::first();
-    return view('userpages.new_opportunity_detail', compact('setting'));
+    return view('userpages.new_opportunity_detail', compact('setting', 'tender'));
   }
 
 

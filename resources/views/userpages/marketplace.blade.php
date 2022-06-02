@@ -148,7 +148,7 @@
                         </div>
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
-                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail')}}" style="text-decoration: none; color: #484848;"><strong>{{$tender->tender_title}}</strong></a></p>
+                        <p class="d-inline furniture-width"><a href="{{route('new-opportunity-detail', ['id' => $tender->id])}}" style="text-decoration: none; color: #484848;"><strong>{{$tender->tender_title}}</strong></a></p>
                       </div>
                     </div>
                     <div class="row pt-2">

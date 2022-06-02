@@ -215,7 +215,7 @@
                   </div>
                   <div class="col-lg-5 col-md-12 card-inner-seeting">
                     <div class="col-lg-12">
-                      <h6 class="furniture-font"><a href="{{route('user-opportunity-detail')}}" style="text-decoration:none;color:#212529">{{$tender->tender_title}}</a></h6>
+                      <h6 class="furniture-font"><a href="{{route('user-opportunity-detail', ['id' => $tender->id])}}" style="text-decoration:none;color:#212529">{{$tender->tender_title}}</a></h6>
                     </div>
                     <div class="col-lg-12">
                       <p style="color: #0d6efd!important;font-style: italic;">
