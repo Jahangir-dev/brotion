@@ -213,8 +213,9 @@ class AuthController extends Controller
                 });
          
                 toast('Please confirm your email','success');
-                return redirect()->route('/');
+                return redirect()->route('home');
     }
+    
 
 
     public function email_verification($token)
