@@ -75,7 +75,7 @@ margin-left: 80px;
               <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><img style="width: 20px;" class="img-fluid" src="{{asset('asset/images/Icon awesome-user-alt.png')}}"></a>
                 <div class="dropdown-menu">
-                    <a href="/new_tender_three" class="dropdown-item">Join Us</a>
+                    <a href="{{route('register')}}" class="dropdown-item">Join Us</a>
                     <a href="{{route('welcome')}}" class="dropdown-item">Login</a>
                 </div>
               </div>
