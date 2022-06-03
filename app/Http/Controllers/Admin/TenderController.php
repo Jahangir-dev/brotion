@@ -97,7 +97,7 @@ class TenderController extends Controller
                 $uploadFolder =  'tenders/' .$request['tender_id'];
                 $this->checkDirectory($uploadFolder);
                 $fileName = time().'.'.$request->document_file->extension();  
-                $request->file->move(public_path($uploadFolder), $fileName);
+                $request->document_file->move(public_path($uploadFolder), $fileName);
                 $request1['document_file'] = $fileName;
             } else {
                 $request1['document_file'] = null;
