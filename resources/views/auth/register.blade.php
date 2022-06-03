@@ -157,7 +157,7 @@
                     </label>
 
                     <div>
-                        <input class="INPUT_LARGE input_blk " type="number" value="{{ old('phone') }}" maxlength="15" onkeypress="return onlyNumber(event)">
+                        <input class="INPUT_LARGE input_blk " type="number" name="phone" value="{{ old('phone') }}" maxlength="15" onkeypress="return onlyNumber(event)">
                     </div>
 
                 </div>

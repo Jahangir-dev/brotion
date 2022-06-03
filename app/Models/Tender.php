@@ -16,7 +16,7 @@ class Tender extends Model
 
     public function city()
    {
-      return $this->hasOne('App\Models\city','id','delivery_city');
+      return $this->hasOne('App\Models\City','id','delivery_city');
    }
 
    public function user()
