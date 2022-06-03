@@ -213,7 +213,7 @@ class AuthController extends Controller
                 });
          
                 toast('Please confirm your email','success');
-                return redirect()->route('login');
+                return redirect()->route('/');
     }
 
 
