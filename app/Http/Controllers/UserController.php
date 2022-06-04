@@ -658,11 +658,27 @@ $opportunity = $opportunity->where('tender_category', $request->category);
     $category = OpportunityCategory::get();
 
     $opportunity = Tender::select();
-    $opportunity = $opportunity->whereHas('bids', function($q){
+    $opportunity = $opportunity->whereHas('bids', function($q) use ($request){
       $q->where('user_id', Auth::user()->id);
+      if($request->has('approved') && !$request->has('pending'))
+      {
+        $q->where('approved', 1);
+      }
+      if($request->has('pending') && !$request->has('approved'))
+      {
+        $q->where('approved', 0);
+      }
+      // if($request->has('lost') && !$request->has('approved'))
+      // {
+      //   $q->where('approved', 0);
+      // }
+
       // $q->where('approved', 1);
     });
-
+    // if($request->has('lost') && !$request->has('approved'))
+    // {
+    //   $opportunity = $opportunity->where('due_date', '<', now());
+    // }
     if (isset($request->category)) {
       $search = $request->category;
       $opportunity = $opportunity->whereHas('category', function ($query) use ($search) {

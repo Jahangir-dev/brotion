@@ -86,6 +86,23 @@ class BidController extends Controller
         //
     }
 
+    public function mark_as_paid($id, Request $request)
+    {
+      $request->validate([
+        'mark' => 'required'
+      ], ['mark.required' => 'Please check the mark as paid first']);
+      $tender = Tender::where('id', $id)->update([
+        'paid' => 1
+      ]);
+      if($tender)
+      {
+        return redirect()->back()->with('success', 'Your request has been submitted successfully');
+      }
+      else{
+        return redirect()->back()->with('danger', 'Invalid Tender or Bid');
+      }
+    }
+
     public function saveBid(Request $request)
     {
         if(Auth::user()){

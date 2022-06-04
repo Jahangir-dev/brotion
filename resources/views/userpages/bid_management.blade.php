@@ -95,22 +95,22 @@
           <div class="col-lg-3 col-md-5 mb-3">
             <div class="card bottom-card" style="height: 100%;">
               <div class="card-body">
-                <form action="{{route('market-place')}}" method="get" id="qualifiaction" role="search" class="card-body-qualifiaction">
+                <form action="{{route('bid-management')}}" method="get" id="qualifiaction" role="search" class="card-body-qualifiaction">
                   <div class="col-lg-12 mb-3 card-check-boxes-heading">
                     <h1>Filter by:</h1>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="all" class="check-box qualifiactionclass left-filters" name="data" value="1">
+                    <input type="checkbox" id="all" {{request()->get('approved') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass left-filters" name="approved" value="1">
                     <label for="all" class="label-card"> Approved</label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="yes" class="check-box qualifiactionclass left-filters" name="data" value="1">
+                    <input type="checkbox" id="yes" {{request()->get('pending') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass left-filters" name="pending" value="1">
                     <label for="yes" class="label-card"> Pending </label>
                   </div>
-                  <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" class="check-box qualifiactionclass left-filters" name="data" value="1">
+                  <!-- <div class="col-lg-12 card-check-boxes">
+                    <input type="checkbox" id="no" {{request()->get('lost') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass left-filters" name="lost" value="1">
                     <label for="no" class="label-card">Lost</label>
-                  </div>
+                  </div> -->
                 </form>
                 <div class="col-lg-12 mt-5 mb-5">
                   <hr style="height:2px;color:black;">
@@ -216,7 +216,8 @@
                     <p class="Sahre" style="  color: #484848;"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid"><span>Share</span></p>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                    <p class="btn approved-button {{$tender->bids[0]->approved ? 'btn-success' : ($tender->due_date < now() ? 'btn-danger' : 'btn-info')}}">{{$tender->bids[0]->approved ? 'Approved' : ($tender->due_date < now() ? 'Lost' : 'Pending')}}</p>
+                    <p class="btn approved-button {{$tender->bids[0]->approved ? 'btn-success' : ($tender->due_date < now() ? 'btn-danger' : 'btn-info')}}">{{$tender->bids[0]->approved ? 'Approved' : 'Pending'}}</p>
+                    <!-- <p class="btn approved-button {{$tender->bids[0]->approved ? 'btn-success' : ($tender->due_date < now() ? 'btn-danger' : 'btn-info')}}">{{$tender->bids[0]->approved ? 'Approved' : ($tender->due_date < now() ? 'Lost' : 'Pending')}}</p> -->
                   </div>
                 </div>
               </div>
@@ -286,26 +287,15 @@
     @include('frontendtemplate.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
     $(function(){
     $('.qualifiactionclass').on('change',function(){
     $('#qualifiaction').submit();
     });
     });
-    </script> -->
+    </script>
     <script type="text/javascript">
     $(function(){
-      $('.left-filters').on('change', function(){
-        $('.left-filters').each(function(i, obj) {
-          if($(this).is(':checked'))
-          {
-            
-          }
-          var URLSearchParams = window.location.href.searchParams;
-          console.log(URLSearchParams);
-          console.log($(this).is(':checked'));
-        });
-      });
     $('.opptype').on('change',function(){
     $('#opptype').submit();
     });

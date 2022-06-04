@@ -96,6 +96,41 @@
             </div>
           </div>
           <div class="col-lg-9 left-part col-md-8">
+          <div class="row mb-3">
+            @if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('warning'))
+<div class="alert alert-warning alert-block">
+	<strong>{{ $message }}</strong>
+</div>
+@endif
+
+
+@if ($message = Session::get('info'))
+<div class="alert alert-info alert-block">
+	<strong>{{ $message }}</strong>
+</div>
+@endif
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+    <div class="alert alert-danger alert-block">
+        <strong>{{ $error }}</strong>
+</div>
+    @endforeach
+@endif
+            </div>
             <div class="card custom-card">
               <div class="row">
                 <div class="col-lg-3">
@@ -188,14 +223,19 @@
             <hr class="items-mid-line">
             @endfor
                       @endif
-            <div class="row approve-top">
-              <div class="col-lg-12">
-                <h3>Approve on bid on the Opportunity</h3>
-              </div>
-            </div>
+            
             @if(count($tender->bids))
             @foreach($tender->bids as $bid)
             <div class="row mt-md-5">
+            <div class="row approve-top">
+              <div class="col-lg-12">
+                @if($bid->approved)
+                <h3 style="color:green;">You have Approved this Bid</h3>
+                @else
+                <h3>Approve on bid on the Opportunity</h3>
+                @endif
+              </div>
+            </div>
               <div class="col-lg-4 col-md-5 col-sm-5">
                 <div class="outer-wrapper-bidder">
                   <label><b style="color: #1C76B9;">1.</b></label>
@@ -223,15 +263,28 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-2">
+              @if($bid->approved == 1)
+              <div class="col-lg-12 mt-5">
                 <div class="outer-wrapper-button">
-                  @if($bid->approved)
-                  <button class="btn approve-button-bottom" disalbed>Approved</button>
-                  @else
-                  <a href="{{route('approveBid', ['id' => $bid->id])}}" class="btn approve-button-bottom">Approve</a>
+                  @if($bid->tender->paid == 0)
+                  <form method="post" name="mark-as-paid" action="{{route('mark-as-paid', ['id' => $bid->tender->id])}}">
+                    @csrf
+                    <div class="form-check" style="font-size: 14px;">
+                      <input class="form-check-input" type="checkbox" value="1" name="mark" id="mark" required>
+                      <label class="form-check-label" for="mark">
+                          Mark as Paid?
+                      </label>
+                    </div>
+                    <button type="submit" name="submit-paid" class="btn approve-button-bottom">Submit</button>
+                  </form>
                   @endif
                 </div>
               </div>
+              @else
+              <div class="col-lg-2">
+              <a href="{{route('approveBid', ['id' => $bid->id])}}" class="btn approve-button-bottom">Approve</a>
+              </div>
+              @endif
             </div>
             @endforeach
             @endif
