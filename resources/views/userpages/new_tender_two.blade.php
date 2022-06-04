@@ -111,7 +111,7 @@
                             <div class="">
                                 <label class="fw-bold h5 TEXT-COLOR" for="item">Item</label>
                                 <div>
-                                    <input class="INPUT_MEDIUM dynamic" type="text" id="item1">
+                                    <input class="INPUT_MEDIUM dynamic" required="" type="text" id="item1">
                                 </div>
                                 
                             </div>
@@ -121,7 +121,7 @@
                                     <label class="fw-bold h5 TEXT-COLOR" for="descrpt"> Description</label>
                                 </div>
                                 <div>
-                                    <textarea class="dynamic" required="" name="" id="descrpt1" cols="50" rows="3"></textarea>
+                                    <textarea class="dynamic" required="" id="descrpt1" cols="50" rows="3"></textarea>
                                 </div>
                             </div>
 

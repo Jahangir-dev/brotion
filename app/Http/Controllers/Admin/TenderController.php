@@ -66,6 +66,7 @@ class TenderController extends Controller
 
     public function twosave(Request $request)
     {
+        
         if($request['sow'] == 'on')
         {   
             $validator = Validator::make($request->all(), [
@@ -97,12 +98,13 @@ class TenderController extends Controller
                 $uploadFolder =  'tenders/' .$request['tender_id'];
                 $this->checkDirectory($uploadFolder);
                 $fileName = time().'.'.$request->document_file->extension();  
-                $request->file->move(public_path($uploadFolder), $fileName);
+                $request->document_file->move(public_path($uploadFolder), $fileName);
                 $request1['document_file'] = $fileName;
             } else {
                 $request1['document_file'] = null;
+                $request1['document'] = null;
             }      
-            TenderItem::where('id',$request1['tender_id'])->update($request1);
+            TenderItem::where('tender_id',$request1['tender_id'])->update($request1);
              return response()->json('success',200);
         }
         else 
@@ -115,6 +117,7 @@ class TenderController extends Controller
                 $request1['document_file'] = $fileName;
             } else {
                 $request1['document_file'] = null;
+                $request1['document'] = null;
             }   
             if(TenderItem::create($request1)) {
                 return response()->json('success',200);
@@ -156,10 +159,8 @@ class TenderController extends Controller
 
     public function extend_date(Request $request)
     {
-        //dd($request['date']);
         Tender::find($request['id'])->update(['due_date' => $request['date']]);
-        toast('Date Extended Updated Successfully', 'success');
+        toast('Date Extended Successfully', 'success');
         return redirect()->back();
-        dd($request);
     }
 }

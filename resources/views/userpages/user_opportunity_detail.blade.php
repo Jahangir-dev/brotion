@@ -11,6 +11,9 @@
     <title>Opportunity Mangement</title>
     
   </head>
+  <style>
+        .dot {background: blueviolet !important;}
+  </style>
   <body>
     <section style="background-color:#1c76b9;">
       @include('frontendtemplate.navbarn')
@@ -67,7 +70,7 @@
                 <h1 class="right-card-headings">Delivery City :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">{{$tender->delivery_city}}</p>
+                <p class="right-card-paras">{{$tender->city->name ?? ''}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery deadline :</h1>
@@ -99,17 +102,43 @@
                   <img src="{{asset('asset/images/1280px-Test-Logo.svg.svg')}}" class="card-side-logo img-fluid" >
                 </div>
                 <div class="col-lg-9">
+                <?php 
+                            $future = strtotime($tender->due_date);
+                            $now = time();
+                            $timeleft = $future-$now;
+                            $daysleft = round((($timeleft/24)/60)/60);
+
+                            $daysleft = $daysleft/5;
+
+                            $date_now = new DateTime();
+                            $date2    = new DateTime($tender->created_at);
+                            
+                            $nowDate = false;
+                            
+                            if ($date_now >= $date2) {
+                                  $nowDate = true;
+                            }
+                          ?>
+                  
                   <div class="Scriptcontent">
+                    
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
+                      <li data-text="Publish Date." @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      
+                      <li data-year="" @if($daysleft >= 2) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1 && $daysleft < 1.5) class="dot" @endif></li>
+                      
+                      <li data-year="" @if($daysleft >= 0.5 && $daysleft < 1) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft > 0 && $daysleft < 0.5) class="dot" @endif></li>
+                      
+                      <li @if($daysleft == 0 && $daysleft < 0) class="dot" @endif data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
+                      
+                      
+                      
+                      
                     </ul>
                     <!-- partial -->
                   </div>
@@ -145,7 +174,13 @@
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
-                  <p>{{$tender->items->document}}</p>
+                  
+                @if($tender->items->sow == 'on' && $tender->items->document_file != null)
+                  <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
+                  <a href="{{asset($uploadFolder)}}" download="{{$tender->items->document_file}}" class="btn">{{$tender->items->document}} <i class="bi bi1 bi-download" style="font-size:18px ;"></i></a>
+                @else 
+                  <p>{{'Not available'}}</p>
+                @endif
                 </div>
               </div>
             </div>

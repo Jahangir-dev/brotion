@@ -11,6 +11,9 @@
     <title>Opportunity Mangement</title>
     
   </head>
+  <style>
+        .dot {background: blueviolet !important;}
+  </style>
   <body>
     <section style="background-color:#1c76b9;">
       @include('frontendtemplate.navbarn')
@@ -71,7 +74,7 @@
                 <h1 class="right-card-headings">Delivery City :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">{{$tender->delivery_city}}</p>
+                    <p class="right-card-paras">{{$tender->city->name ?? ''}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery deadline :</h1>
@@ -142,22 +145,38 @@
                 </div>
                 
                 <div class="col-lg-9">
-                  
+                <?php 
+                            $future = strtotime($tender->due_date);
+                            $now = time();
+                            $timeleft = $future-$now;
+                            $daysleft = round((($timeleft/24)/60)/60);
+
+                            $daysleft = $daysleft/5;
+
+                            $date_now = new DateTime();
+                            $date2    = new DateTime($tender->created_at);
+                            
+                            $nowDate = false;
+                            
+                            if ($date_now >= $date2) {
+                                  $nowDate = true;
+                            }
+                          ?>
                   
                   <div class="Scriptcontent">
                     
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      <li data-text="Publish Date." @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
                       
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
+                      <li data-year="" @if($daysleft >= 2) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft >= 1 && $daysleft < 1.5) class="dot" @endif></li>
                       
-                      <li data-year=""></li>
-                      <li data-year=""></li>
+                      <li data-year="" @if($daysleft >= 0.5 && $daysleft < 1) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft > 0 && $daysleft < 0.5) class="dot" @endif></li>
                       
-                      <li data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
+                      <li @if($daysleft == 0 && $daysleft < 0) class="dot" @endif data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
                       
                       
@@ -202,7 +221,12 @@
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
-                  <p>{{$tender->items->document}}</p>
+                @if($tender->items->sow == 'on' && $tender->items->document_file != null)
+                  <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
+                  <a href="{{asset($uploadFolder)}}" download="{{$tender->items->document_file}}" class="btn">{{$tender->items->document}} <i class="bi bi1 bi-download" style="font-size:18px ;"></i></a>
+                @else 
+                  <p>{{'Not available'}}</p>
+                @endif
                 </div>
               </div> 
             </div>
@@ -210,41 +234,61 @@
             <hr class="items-mid-line">
             @endfor
                       @endif
+            
             <div class="row approve-top">
               <div class="col-lg-12">
                 <h3>Send Your Bid/Proposal on the Opportunity</h3>
               </div>
               
             </div>
-            <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">
-              @csrf
-              <input type="hidden" name="tender_id" value="{{$tender->id}}"/>
-              <div class="row mt-3 mb-3 lastrow">
-                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Price</label>
-                  <div>
-                    <input required type="number" name="price" value="" class="form-control input-setting">
+                       
+           <?php 
+           $user_own = true;
+              if(isset(Auth::user()->id))
+              {
+                if(Auth::user()->id == $tender->user_id)
+                {
+                  $user_own = false;
+                }
+              }
+           ?>
+           @if($user_own)
+              @if($bidStatus == 0)
+                <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="tender_id" value="{{$tender->id}}"/>
+                  <div class="row mt-3 mb-3 lastrow">
+                    <div class="col-xl-3 col-lg-2 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">Price</label>
+                      <div>
+                        <input required type="number" name="price" value="" class="form-control input-setting">
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">Proposal</label>
+                      <div>
+                        <input type="file" required name="document" class="form-control input-setting1">
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-2 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">VAT</label>
+                      <div>
+                        <input type="number"  name="vat" value="" class="form-control input-setting" >
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6">
+                      <button type="submit" class="btn btn-primary save-button">Send</button>
+                      
+                    </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Proposal</label>
-                  <div>
-                    <input type="file" required name="document" class="form-control input-setting1">
-                  </div>
-                </div>
-                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">VAT</label>
-                  <div>
-                    <input type="number"  name="vat" value="" class="form-control input-setting" >
-                  </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-3 col-6">
-                  <button type="submit" class="btn btn-primary save-button">Send</button>
-                  
-                </div>
-              </div>
-            </form>
-            
+                </form>
+              @else
+                  <h1>You have already bid on this tender</h1>
+              @endif
+            @else
+            <h1>You can't bid on your own tender</h1>
+          @endif
+           
             
             
           </div>

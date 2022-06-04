@@ -604,8 +604,8 @@ font-family: 'Open Sans';
     padding: .5rem 2rem;
     width: 30%;
     border-radius: .7rem;
-    background-color: #aacce5;
-    color:#3983f1;
+    /* background-color: #aacce5;
+    color:#3983f1; */
     border: none;
         display: block;
     margin-left: auto;

@@ -88,38 +88,43 @@ class BidController extends Controller
 
     public function saveBid(Request $request)
     {
-        $request->validate([
-            'document' => 'mimes:doc,pdf,docx,zip'
-        ],
-        [
-            'document.mimes' => 'Proposal document only acceptable in doc,pdf,docx or zip format'
-        ]);
-        if(isset($request->tender_id))
-        {
-            $tender = Tender::where('id', $request->tender_id)->first();
-            $bid = Bid::where('user_id', Auth::user()->id)->where('tender_id', $tender->id)->first();
-            if($bid)
-            {
-                return redirect()->back()->with('warning', 'You have already placed bid against this tender');
-            }
-            if($request->hasFile('document'))
-            {
-                $file=$request->file('document');
-                $docname = time().'_proposal_'.uniqid().$file->getClientOriginalName();
-                $file->move(public_path('uploads/proposals/'.$tender->id), $docname);
-            }
-            Bid::create([
-                'user_id' => Auth::user()->id,
-                'tender_id' => $tender->id,
-                'price' => $request->price,
-                'vat' => $request->vat,
-                'document' => $docname
+        if(Auth::user()){
+            $request->validate([
+                'document' => 'mimes:doc,pdf,docx,zip'
+            ],
+            [
+                'document.mimes' => 'Proposal document only acceptable in doc,pdf,docx or zip format'
             ]);
-            return redirect()->back()->with('success', 'Bid submitted successfully');
-        }
-        else
-        {
-            return redirect()->back('error', 'Tender Not exist now');
+            if(isset($request->tender_id))
+            {
+                $tender = Tender::where('id', $request->tender_id)->first();
+                $bid = Bid::where('user_id', Auth::user()->id)->where('tender_id', $tender->id)->first();
+                if($bid)
+                {
+                    return redirect()->back()->with('warning', 'You have already placed bid against this tender');
+                }
+                if($request->hasFile('document'))
+                {
+                    $file=$request->file('document');
+                    $docname = time().'_proposal_'.uniqid().$file->getClientOriginalName();
+                    $file->move(public_path('uploads/proposals/'.$tender->id), $docname);
+                }
+                Bid::create([
+                    'user_id' => Auth::user()->id,
+                    'tender_id' => $tender->id,
+                    'price' => $request->price,
+                    'vat' => $request->vat,
+                    'document' => $docname
+                ]);
+                return redirect()->back()->with('success', 'Bid submitted successfully');
+            }
+            else
+            {
+                return redirect()->back('error', 'Tender Not exist now');
+            }
+        } else {
+            toast('Please login to bid this tender','error');
+            return redirect()->back();
         }
     }
 

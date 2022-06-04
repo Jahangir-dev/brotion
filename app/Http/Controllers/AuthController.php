@@ -15,8 +15,7 @@ use App\Models\UserDetails;
 
 class AuthController extends Controller
 {
-    
-    
+
      public function submitForgetPasswordForm(Request $request)
       {
           $request->validate([
@@ -109,8 +108,8 @@ class AuthController extends Controller
         $input = $request->all();
             $request->validate([
             'name' => 'required',
-            'email' => 'required_with:confirm_email|same:confirm_email',
-            'confirm_email'=>'required',
+            'email' => 'required',
+            //'confirm_email'=>'required',
             'company_name' => 'required',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
              'password_confirmation' => 'min:6',
@@ -213,8 +212,9 @@ class AuthController extends Controller
                 });
          
                 toast('Please confirm your email','success');
-                return redirect()->route('login');
+                return redirect()->route('home');
     }
+    
 
 
     public function email_verification($token)

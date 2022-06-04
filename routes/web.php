@@ -18,7 +18,9 @@ use App\Http\Controllers\BidController;
 Route::get('/', function () {
 return redirect()->route('welcome');
 });
-
+Route::get('/home', function () {
+    return redirect()->route('welcome');
+    })->name('home');
 Route::get('/profile', function () {
     return view('profile');
     });
