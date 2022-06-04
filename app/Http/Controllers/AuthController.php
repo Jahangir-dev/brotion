@@ -15,8 +15,7 @@ use App\Models\UserDetails;
 
 class AuthController extends Controller
 {
-    
-    
+
      public function submitForgetPasswordForm(Request $request)
       {
           $request->validate([

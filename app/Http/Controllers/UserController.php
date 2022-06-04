@@ -844,7 +844,7 @@ $opportunity = $opportunity->where('tender_category', $request->category);
 
   public function user_opportunity_detail($id)
   {
-    $tender = Tender::where('id', $id)->first();
+    $tender = Tender::where('id', $id)->with('city')->first();
     if(!$tender)
     {
       return redirect()->back()->with('warning', 'Data not found');
@@ -857,7 +857,7 @@ $opportunity = $opportunity->where('tender_category', $request->category);
   public function new_opportunity_detail($id)
   {
       Tender::where('id', $id)->increment('seen');
-      $tender = Tender::where('id', $id)->first();
+      $tender = Tender::where('id', $id)->with('city')->first();
       if(!$tender)
       {
         return redirect()->back()->with('warning', 'Data not found');

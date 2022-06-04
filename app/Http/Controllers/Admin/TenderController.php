@@ -66,6 +66,7 @@ class TenderController extends Controller
 
     public function twosave(Request $request)
     {
+        
         if($request['sow'] == 'on')
         {   
             $validator = Validator::make($request->all(), [
@@ -102,7 +103,7 @@ class TenderController extends Controller
             } else {
                 $request1['document_file'] = null;
             }      
-            TenderItem::where('id',$request1['tender_id'])->update($request1);
+            TenderItem::where('tender_id',$request1['tender_id'])->update($request1);
              return response()->json('success',200);
         }
         else 

@@ -70,7 +70,7 @@
                 <h1 class="right-card-headings">Delivery City :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">{{$tender->delivery_city}}</p>
+                <p class="right-card-paras">{{$tender->city->name ?? ''}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery deadline :</h1>
@@ -174,7 +174,13 @@
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
-                  <p>{{$tender->items->document}}</p>
+                  
+                @if($tender->items->sow == 'on' && $tender->items->document_file != null)
+                  <?php dd($tender->items); $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
+                  <a href="{{asset($uploadFolder)}}" download="{{$tender->items->document_file}}" class="btn">{{$tender->items->document}} <i class="bi bi1 bi-download" style="font-size:18px ;"></i></a>
+                @else 
+                  <p>{{'Not available'}}</p>
+                @endif
                 </div>
               </div>
             </div>
