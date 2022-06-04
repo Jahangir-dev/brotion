@@ -102,6 +102,7 @@ class TenderController extends Controller
                 $request1['document_file'] = $fileName;
             } else {
                 $request1['document_file'] = null;
+                $request1['document'] = null;
             }      
             TenderItem::where('tender_id',$request1['tender_id'])->update($request1);
              return response()->json('success',200);
@@ -116,6 +117,7 @@ class TenderController extends Controller
                 $request1['document_file'] = $fileName;
             } else {
                 $request1['document_file'] = null;
+                $request1['document'] = null;
             }   
             if(TenderItem::create($request1)) {
                 return response()->json('success',200);
