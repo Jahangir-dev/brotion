@@ -222,7 +222,7 @@
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
                 @if($tender->items->sow == 'on' && $tender->items->document_file != null)
-                  <?php dd($tender->items); $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
+                  <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
                   <a href="{{asset($uploadFolder)}}" download="{{$tender->items->document_file}}" class="btn">{{$tender->items->document}} <i class="bi bi1 bi-download" style="font-size:18px ;"></i></a>
                 @else 
                   <p>{{'Not available'}}</p>
