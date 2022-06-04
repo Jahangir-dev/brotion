@@ -27,13 +27,17 @@ class UserController extends Controller
 
   public function welcome(Request $request)
   {
+    
     $setting = FooterSetting::first();
-
+    $usersCount = User::count();
+    $tendersCount = Tender::where('complete',1)->count();
+    $bidsCount    = Bid::count(); 
+    //dd($usersCount);
     if (Auth::check()) {
       $category = OpportunityCategory::get();
       $user_id = Auth::user()->id;
       $opportunity = UserOpportunity::select();
-
+     
       if (isset($request->category)) {
         $search = $request->category;
 
@@ -54,7 +58,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting'));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
     } else {
       $category = OpportunityCategory::get();
       $opportunity = UserOpportunity::select();
@@ -75,7 +79,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting'));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
     }
   }
 
@@ -437,7 +441,7 @@ class UserController extends Controller
 
       if (isset($request->category)) {
         $search = $request->category;
-$opportunity = $opportunity->where('tender_category', $request->category);
+        $opportunity = $opportunity->where('tender_category', $request->category);
         // $opportunity = $opportunity->whereHas('opp_category', function ($query) use ($search) {
         //   $query->where('categories', 'like', '%' . $search . '%');;
         // });
