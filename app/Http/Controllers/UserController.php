@@ -79,7 +79,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount',''));
     }
   }
 
@@ -88,7 +88,9 @@ class UserController extends Controller
   {
 
     $setting = FooterSetting::first();
-
+    $usersCount = User::count();
+    $tendersCount = Tender::where('complete',1)->count();
+    $bidsCount    = Bid::count(); 
     if (Auth::check()) {
       $category = OpportunityCategory::get();
       $user_id = Auth::user()->id;
@@ -114,7 +116,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting'));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
     } else {
       $category = OpportunityCategory::get();
 
@@ -135,7 +137,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting'));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
     }
   }
 
@@ -166,23 +168,6 @@ class UserController extends Controller
       $opportunity = $opportunity->where('opp_type', '=', $request->type);
     } elseif ($request->has('type') && $request->type == 'all') {
       $opportunity;
-    }
-
-    if($request->has('running') && !$request->has('closed'))
-    {
-      $opportunity = $opportunity->where('due_date', '>=', now());
-    }
-    if($request->has('closed') && !$request->has('running'))
-    {
-      $opportunity = $opportunity->where('due_date', '<', now());
-    }
-    if($request->has('paid') && !$request->has('unpaid'))
-    {
-      $opportunity = $opportunity->where('paid', true);
-    }
-    if($request->has('unpaid') && !$request->has('paid'))
-    {
-      $opportunity = $opportunity->where('paid', false);
     }
 
 
@@ -421,14 +406,6 @@ class UserController extends Controller
         if($request->sortby == 'Descending')
         $opportunity = $opportunity->orderBy('id', 'desc');
       }
-      if($request->has('open') && !$request->has('close'))
-      {
-        $opportunity = $opportunity->where('due_date', '>=', now());
-      }
-      if($request->has('close') && !$request->has('open'))
-      {
-        $opportunity = $opportunity->where('due_date', '<', now());
-      }
 
       if (isset($request->opp_title)) {
         $search = $request->opp_title;
@@ -662,27 +639,11 @@ class UserController extends Controller
     $category = OpportunityCategory::get();
 
     $opportunity = Tender::select();
-    $opportunity = $opportunity->whereHas('bids', function($q) use ($request){
+    $opportunity = $opportunity->whereHas('bids', function($q){
       $q->where('user_id', Auth::user()->id);
-      if($request->has('approved') && !$request->has('pending'))
-      {
-        $q->where('approved', 1);
-      }
-      if($request->has('pending') && !$request->has('approved'))
-      {
-        $q->where('approved', 0);
-      }
-      // if($request->has('lost') && !$request->has('approved'))
-      // {
-      //   $q->where('approved', 0);
-      // }
-
       // $q->where('approved', 1);
     });
-    // if($request->has('lost') && !$request->has('approved'))
-    // {
-    //   $opportunity = $opportunity->where('due_date', '<', now());
-    // }
+
     if (isset($request->category)) {
       $search = $request->category;
       $opportunity = $opportunity->whereHas('category', function ($query) use ($search) {
@@ -890,7 +851,8 @@ class UserController extends Controller
 
   public function user_opportunity_detail($id)
   {
-    $tender = Tender::where('id', $id)->with('city')->first();
+    $tender = Tender::where('id', $id)->with('city')->with('bid')->first();
+    //dd($tender);
     if(!$tender)
     {
       return redirect()->back()->with('warning', 'Data not found');
@@ -903,7 +865,7 @@ class UserController extends Controller
   public function new_opportunity_detail($id)
   {
       Tender::where('id', $id)->increment('seen');
-      $tender = Tender::where('id', $id)->with('city')->first();
+      $tender = Tender::where('id', $id)->with('city')->with('bid')->first();
       $bidStatus = Bid::where('tender_id',$id)->where('user_id',Auth::user()->id)->count();
       
       if(!$tender)

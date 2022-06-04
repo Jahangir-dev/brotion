@@ -39,4 +39,9 @@ class Tender extends Model
         return $this->hasMany(Bid::class);
         // return $this->hasMany('App\Models\Tender','user_id','id');
     }
+
+    public function bid()
+   {
+      return $this->hasOne('App\Models\Bid','tender_id','id');
+   }
 }
