@@ -103,17 +103,17 @@
                     <h1>Filter by:</h1>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="all" class="check-box qualifiactionclass" name="data" value="all">
+                    <input type="checkbox" {{request()->get('open') == '1' ? 'checked' : ''}} id="all" class="check-box qualifiactionclass open-close-filter"  name="open" value="1">
                     <label for="all" class="label-card"> Open</label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="yes" class="check-box qualifiactionclass" name="data" value="yes">
+                    <input type="checkbox" {{request()->get('close') == '1' ? 'checked' : ''}} id="yes" class="check-box qualifiactionclass open-close-filter" name="close" value="1">
                     <label for="yes" class="label-card"> Closed</label>
                   </div>
-                  <div class="col-lg-12 card-check-boxes">
+                  <!-- <div class="col-lg-12 card-check-boxes">
                     <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
                     <label for="no" class="label-card">City</label>
-                  </div>
+                  </div> -->
                 </form>
                 <div class="col-lg-12 mt-5 mb-5">
                   <hr style="height:2px;color:black;">
@@ -236,13 +236,13 @@
     @include('frontendtemplate.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
     $(function(){
     $('.qualifiactionclass').on('change',function(){
     $('#qualifiaction').submit();
     });
     });
-    </script> -->
+    </script>
     <script type="text/javascript">
     $(function(){
     $('.opptype').on('change',function(){

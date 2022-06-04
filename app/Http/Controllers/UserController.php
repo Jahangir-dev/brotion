@@ -163,6 +163,23 @@ class UserController extends Controller
       $opportunity;
     }
 
+    if($request->has('running') && !$request->has('closed'))
+    {
+      $opportunity = $opportunity->where('due_date', '>=', now());
+    }
+    if($request->has('closed') && !$request->has('running'))
+    {
+      $opportunity = $opportunity->where('due_date', '<', now());
+    }
+    if($request->has('paid') && !$request->has('unpaid'))
+    {
+      $opportunity = $opportunity->where('paid', true);
+    }
+    if($request->has('unpaid') && !$request->has('paid'))
+    {
+      $opportunity = $opportunity->where('paid', false);
+    }
+
 
 
     if ($request->has('sortby')) {
@@ -398,6 +415,14 @@ class UserController extends Controller
         $opportunity = $opportunity->orderBy('id', 'asc');
         if($request->sortby == 'Descending')
         $opportunity = $opportunity->orderBy('id', 'desc');
+      }
+      if($request->has('open') && !$request->has('close'))
+      {
+        $opportunity = $opportunity->where('due_date', '>=', now());
+      }
+      if($request->has('close') && !$request->has('open'))
+      {
+        $opportunity = $opportunity->where('due_date', '<', now());
       }
 
       if (isset($request->opp_title)) {

@@ -122,24 +122,20 @@
                 </div>
 
                 <div class="col-lg-12 card-check-boxes">
-                  <input type="checkbox" id="yes" class="check-box qualifiactionclass" name="data" value="yes">
+                  <input type="checkbox" id="yes" {{request()->get('running') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="running" value="1">
                   <label for="yes" class="label-card"> Running</label>
                 </div>
                 <div class="col-lg-12 card-check-boxes">
-                  <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
-                  <label for="no" class="label-card">Awarded</label>
+                  <input type="checkbox" id="no" {{request()->get('closed') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="closed" value="1">
+                  <label for="no" class="label-card">Closed</label>
                 </div>
                 <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
+                    <input type="checkbox" id="no" {{request()->get('paid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="paid" value="1">
                     <label for="no" class="label-card">Paid</label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
-                    <label for="no" class="label-card">Received</label>
-                  </div>
-                  <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" class="check-box qualifiactionclass" name="data" value="no">
-                    <label for="no" class="label-card">Completed</label>
+                    <input type="checkbox" id="no" {{request()->get('unpaid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="unpaid" value="1">
+                    <label for="no" class="label-card">Unpaid</label>
                   </div>
                </form>
 
@@ -382,13 +378,13 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         $(function(){
          $('.qualifiactionclass').on('change',function(){
             $('#qualifiaction').submit();
             });
         });
-    </script> -->
+    </script>
     <script type="text/javascript">
         $(function(){
          $('.opptype').on('change',function(){
