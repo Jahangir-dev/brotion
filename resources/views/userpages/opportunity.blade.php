@@ -183,6 +183,7 @@
 
           </div>
           <div class="col-lg-9 col-md-7 col-sm-12">
+            @if(count($opportunity) > 0)
             @foreach($opportunity as $tender)
             <div class="card-left">
               <div class="card-body card-padding">
@@ -273,6 +274,17 @@
               
             </div>
             @endforeach
+            @else 
+            <div class="card-left">
+              <div class="card-body card-padding">
+                <div class="row">
+                  <div>
+                    <h1>No tender found</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endif
 
 
           </div>

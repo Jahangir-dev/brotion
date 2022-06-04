@@ -20,6 +20,7 @@ use App\Models\Provinces;
 use App\Models\Details;
 use App\Models\OpportunityCategory;
 use App\Models\FooterSetting;
+use App\Models\Bid;
 
 class UserController extends Controller
 {
@@ -858,12 +859,14 @@ $opportunity = $opportunity->where('tender_category', $request->category);
   {
       Tender::where('id', $id)->increment('seen');
       $tender = Tender::where('id', $id)->with('city')->first();
+      $bidStatus = Bid::where('tender_id',$id)->where('user_id',Auth::user()->id)->count();
+      
       if(!$tender)
       {
         return redirect()->back()->with('warning', 'Data not found');
       }
       $setting = FooterSetting::first();
-      return view('userpages.new_opportunity_detail', compact('setting', 'tender'));
+      return view('userpages.new_opportunity_detail', compact('setting', 'tender','bidStatus'));
   }
 
 

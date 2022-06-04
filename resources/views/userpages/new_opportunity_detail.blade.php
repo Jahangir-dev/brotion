@@ -241,36 +241,54 @@
               </div>
               
             </div>
-            @if(Auth::user()->id ?? '' != $tender->user_id)
-            <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">
-              @csrf
-              <input type="hidden" name="tender_id" value="{{$tender->id}}"/>
-              <div class="row mt-3 mb-3 lastrow">
-                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Price</label>
-                  <div>
-                    <input required type="number" name="price" value="" class="form-control input-setting">
+                       
+           <?php 
+           $user_own = true;
+              if(isset(Auth::user()->id))
+              {
+                if(Auth::user()->id == $tender->user_id)
+                {
+                  $user_own = false;
+                }
+              }
+           ?>
+           @if($user_own)
+              @if($bidStatus == 0)
+                <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="tender_id" value="{{$tender->id}}"/>
+                  <div class="row mt-3 mb-3 lastrow">
+                    <div class="col-xl-3 col-lg-2 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">Price</label>
+                      <div>
+                        <input required type="number" name="price" value="" class="form-control input-setting">
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">Proposal</label>
+                      <div>
+                        <input type="file" required name="document" class="form-control input-setting1">
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-2 col-md-3 col-6">
+                      <label class="price-proposal-vat-label">VAT</label>
+                      <div>
+                        <input type="number"  name="vat" value="" class="form-control input-setting" >
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6">
+                      <button type="submit" class="btn btn-primary save-button">Send</button>
+                      
+                    </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Proposal</label>
-                  <div>
-                    <input type="file" required name="document" class="form-control input-setting1">
-                  </div>
-                </div>
-                <div class="col-xl-3 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">VAT</label>
-                  <div>
-                    <input type="number"  name="vat" value="" class="form-control input-setting" >
-                  </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-3 col-6">
-                  <button type="submit" class="btn btn-primary save-button">Send</button>
-                  
-                </div>
-              </div>
-            </form>
-            @endif
+                </form>
+              @else
+                  <h1>You have already bid on this tender</h1>
+              @endif
+            @else
+            <h1>You can't bid on your own tender</h1>
+          @endif
+           
             
             
           </div>

@@ -216,15 +216,25 @@
                     <p class="Sahre" style="  color: #484848;"><img src="{{asset('asset/images/md-share-alt.svg')}}"   class="rounded-circle img-fluid"><span>Share</span></p>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-end">
-                    <p class="btn approved-button">{{$tender->bids[0]->approved ? 'Approved' : ($tender->due_date < now() ? 'Lost' : 'Pending')}}</p>
+                    <p class="btn approved-button {{$tender->bids[0]->approved ? 'btn-success' : ($tender->due_date < now() ? 'btn-danger' : 'btn-info')}}">{{$tender->bids[0]->approved ? 'Approved' : ($tender->due_date < now() ? 'Lost' : 'Pending')}}</p>
                   </div>
                 </div>
               </div>
               
             </div>
             @endforeach
+            @else 
+            <div class="card-left">
+              <div class="card-body card-padding">
+                <div class="row">
+                  <div>
+                    <h1>No Bid found</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
             @endif
-
+           
             
             
           </div>
