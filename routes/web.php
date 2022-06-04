@@ -146,11 +146,11 @@ Route::post('user-personal-info-save', [UserController::class, 'user_personal_in
 
 });
 
-
 Route::get('opportunity-title-search', [UserController::class, 'opportunity_title_search'])->name('opportunity-title-search');
 
 Route::get('opportunity-details/{id}', [UserController::class, 'opportunity_details'])->name('opportunity-details');
 
+Route::any('mark-as-paid/{id}', [BidController::class, 'mark_as_paid'])->name('mark-as-paid');
 Route::any('download-proposal/{id}', [BidController::class, 'downloadProposal'])->name('download-proposal');
 Route::any('approve-bid/{id}', [BidController::class, 'approveBid'])->name('approveBid');
 Route::post('save-bid', [BidController::class, 'saveBid'])->name('saveBid');

@@ -168,6 +168,23 @@ class UserController extends Controller
       $opportunity;
     }
 
+    if($request->has('running') && !$request->has('closed'))
+    {
+      $opportunity = $opportunity->where('due_date', '>=', now());
+    }
+    if($request->has('closed') && !$request->has('running'))
+    {
+      $opportunity = $opportunity->where('due_date', '<', now());
+    }
+    if($request->has('paid') && !$request->has('unpaid'))
+    {
+      $opportunity = $opportunity->where('paid', true);
+    }
+    if($request->has('unpaid') && !$request->has('paid'))
+    {
+      $opportunity = $opportunity->where('paid', false);
+    }
+
 
 
     if ($request->has('sortby')) {
@@ -404,6 +421,14 @@ class UserController extends Controller
         if($request->sortby == 'Descending')
         $opportunity = $opportunity->orderBy('id', 'desc');
       }
+      if($request->has('open') && !$request->has('close'))
+      {
+        $opportunity = $opportunity->where('due_date', '>=', now());
+      }
+      if($request->has('close') && !$request->has('open'))
+      {
+        $opportunity = $opportunity->where('due_date', '<', now());
+      }
 
       if (isset($request->opp_title)) {
         $search = $request->opp_title;
@@ -637,11 +662,27 @@ class UserController extends Controller
     $category = OpportunityCategory::get();
 
     $opportunity = Tender::select();
-    $opportunity = $opportunity->whereHas('bids', function($q){
+    $opportunity = $opportunity->whereHas('bids', function($q) use ($request){
       $q->where('user_id', Auth::user()->id);
+      if($request->has('approved') && !$request->has('pending'))
+      {
+        $q->where('approved', 1);
+      }
+      if($request->has('pending') && !$request->has('approved'))
+      {
+        $q->where('approved', 0);
+      }
+      // if($request->has('lost') && !$request->has('approved'))
+      // {
+      //   $q->where('approved', 0);
+      // }
+
       // $q->where('approved', 1);
     });
-
+    // if($request->has('lost') && !$request->has('approved'))
+    // {
+    //   $opportunity = $opportunity->where('due_date', '<', now());
+    // }
     if (isset($request->category)) {
       $search = $request->category;
       $opportunity = $opportunity->whereHas('category', function ($query) use ($search) {
