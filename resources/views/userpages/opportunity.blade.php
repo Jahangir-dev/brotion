@@ -256,12 +256,23 @@
                   <div class="col-lg-3 col-md-6 col-sm-6 see-times col-6">
                     <p>Seen<strong  class="text-primary"> {{$tender->seen}} Times</strong></p>
                   </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                  <div class="col-lg-2 col-md-6 col-sm-6 col-6">
                     <p style="  color: #484848;"><img src="{{asset('asset/images/forward.png')}}"   class="rounded-circle img-fluid"> Share</p>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 col-6 setting-button">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-6 setting-button">
                     @if($tender->due_date >= now())
                     <button class="btn btn-secondary running-button">Running</button>
+                    @endif
+                    @if($tender->paid)
+                    <button class="btn btn-info" style="font-size: 16px;
+    padding: 4px 20px;
+    margin-right: 1rem;
+    border-radius: 7px;color:white;">Paid</button>
+                    @else
+                    <button class="btn btn-warning" style="font-size: 16px;
+    padding: 4px 20px;
+    margin-right: 1rem;
+    border-radius: 7px;color:white;">Unpaid</button>
                     @endif
                     <button class="btn btn-secondary approved" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
                   </div>

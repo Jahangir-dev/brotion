@@ -212,12 +212,14 @@
             <hr class="items-mid-line">
             @endfor
                       @endif
+                      @if($bid->approved)
             <div class="row approve-top">
               <div class="col-lg-12">
                 <h3>Congratulation Your bid is approved</h3>
               </div>
               
             </div>
+            @endif
             <form>
               <div class="row mt-3 mb-3">
                 
