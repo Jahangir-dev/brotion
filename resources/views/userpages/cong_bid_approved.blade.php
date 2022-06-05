@@ -23,23 +23,23 @@
           </div>
           
         </div>
-      
-        
         <div class="row">
           <div class="col-lg-4 col-md-4">
             <div class="col-lg-12 d-flex">
               <img src="{{asset('asset/images/Group 16892.svg')}}" class="img-fluid">
-              <h5 class="furniture-setting">Furniture</h5>
+              <h5 class="furniture-setting">{{$tender->tender_title}}</h5>
             </div>
             <div class="col-lg-12 reference-col">
-              <p class="reference-no">Reference No. <span class="reference-span">001</span></p>
+              <p class="reference-no">Reference No. <span class="reference-span">{{$tender->ref_no}}</span></p>
             </div>
             <div class="col-lg-12 mt-3 live-class mb-3">
-              <button class="btn live-button">Live</button>
-              <h5 class="reference-span"> 2 days to go</h5>
+              <button class="btn live-button">{{$tender->due_date < now() ? 'Closed' : 'Live'}}</button>
+              <h5 class="reference-span"> @if($tender->due_date >= now())
+              {{ round((strtotime($tender->due_date) - time()) / 86400) . ' days to go' }}  
+              @endif</h5>
             </div>
             <div class="col-lg-12 card-uper-para-col">
-              <p class="card-uper-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  et...</p>
+              <!-- <p class="card-uper-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  et...</p> -->
             </div>
             <div class="col-lg-12">
               <div class="card right-card">
@@ -49,43 +49,43 @@
                 <h1 class="right-card-headings">Publisher</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Consultation</p>
+                <p class="right-card-paras">{{$tender->user->name}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Publish date :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">3-21-2022</p>
+                <p class="right-card-paras">{{date('m-d-Y', strtotime($tender->created_at))}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Category :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Electronics</p>
+                <p class="right-card-paras">{{$tender->category->name}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery City :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Riyadh</p>
+                <p class="right-card-paras">{{$tender->city->name}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Delivery deadline :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">3-30-2022</p>
+                <p class="right-card-paras">{{date('d-m-Y', strtotime($tender->due_date))}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Payment days :</h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">15 days</p>
+                <p class="right-card-paras">{{$tender->payment_days . ' days'}}</p>
                     </div>
                     <div class="col-lg-7 col-7">
                 <h1 class="right-card-headings">Payment Type  : </h1>
                     </div>
                     <div class="col-lg-5 col-5">
-                <p class="right-card-paras">Payment on delivery</p>
+                <p class="right-card-paras">{{$tender->payment_method}}</p>
                     </div>
                     
                   </div>
@@ -103,28 +103,62 @@
                 </div>
                 
                 <div class="col-lg-9">
-                  
+                <?php 
+                            $future = strtotime($tender->due_date);
+                            $now = time();
+                            $timeleft = $future-$now;
+                            $daysleft = round((($timeleft/24)/60)/60);
+
+                            $daysleft = $daysleft/5;
+
+                            $date_now = new DateTime();
+                            $date2    = new DateTime($tender->created_at);
+                            
+                            $nowDate = false;
+                            
+                            if ($date_now >= $date2) {
+                                  $nowDate = true;
+                            }
+
+                            
+                          ?>
                   
                   <div class="Scriptcontent">
-                    
+                  @if(!isset($bid->approved))
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." data-year="16 Des" ></li>
+                      <li data-text="Publish Date" @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
                       
-                      <li data-year=""></li>
-                      <li data-year=""></li>
-                      <li data-year=""></li>
+                      <li data-year="" @if($daysleft <= 2) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 1 && $daysleft < 1.5) class="dot" @endif></li>
                       
-                      <li data-year=""></li>
-                      <li data-year=""></li>
+                      <li data-year="" @if($daysleft <= 0.5 && $daysleft < 1) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft == 0 && $daysleft < 0.5) class="dot" @endif></li>
                       
-                      <li data-year="19  Des" data-text="Due Date."></li>
+                      <li @if($daysleft == 0 && $daysleft < 0) class="dot" @endif data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
+
+                    </ul>
+                    @elseif($bid->approved)
+                  <ul class="timeline">
+                      <li data-text="Publish Date" class="dot" data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      
+                      <li data-year=""  class="dot" ></li>
+                      <li data-year=""  class="dot"></li>
+                      <li data-year="" class="dot"></li>
+                      
+                      <li data-year=""  class="dot" ></li>
+                      <li data-year=""  class="dot" ></li>
+                      
+                      <li  class="dot"  data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
+                      <li  class="dot" data-year="" data-text="Awarded"></li>
                       
                       
                       
                       
                     </ul>
+                  @endif
                     <!-- partial -->
                     
                   </div>
@@ -135,90 +169,76 @@
               </div>
               
             </div>
+            @if($tender->items)
+                      @php
+                      $items = json_decode($tender->items->items, true);
+                      $count = count($items)/3;
+                      @endphp
+                      @for($i=1;$i<=$count;$i++)
+                      
             <div class="row mt-3 item-setting">
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Item Name</label>
                 <div class="background-div-setting">
-                  <h1>Furniture</h1>
+                  <h1>{{$items['item'.$i]}}</h1>
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 col-sm-6">
                 <label class="Item-description">Description</label>
                 <div class="background-div-setting">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, .</p>
+                  <p>{{$items['descrpt'.$i]}}</p>
                 </div>
               </div>
               <div class="col-lg-2 col-md-6 col-sm-6 text-lg-end">
                 <label class="Item-quantity">Quantity</label>
                 <div class="background-div-quantity">
-                  <p>1</p>
+                  <p>{{$items['quality'.$i]}}</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Scope Of Work</label>
                 <div class="type-of-scope">
-                  <p>Doc Name</p>
+                  
+                @if($tender->items->sow == 'on' && $tender->items->document_file != null)
+                  <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items->document_file;?>
+                  <a href="{{asset($uploadFolder)}}" download="{{$tender->items->document_file}}" class="btn">{{$tender->items->document}} <i class="bi bi1 bi-download" style="font-size:18px ;"></i></a>
+                @else 
+                  <p>{{'Not available'}}</p>
+                @endif
                 </div>
               </div>
             </div>
+            
             <hr class="items-mid-line">
-            <div class="row mt-3 item-setting">
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <label class="Item-names">Item Name</label>
-                <div class="background-div-setting">
-                  <h1>Furniture</h1>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 col-sm-6">
-                <label class="Item-description">Description</label>
-                <div class="background-div-setting">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, .</p>
-                </div>
-              </div>
-              <div class="col-lg-2 col-md-6 col-sm-6 text-lg-end">
-                <label class="Item-quantity">Quantity</label>
-                <div class="background-div-quantity">
-                  <p>1</p>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <label class="Item-names">Scope Of Work</label>
-                <div class="type-of-scope">
-                  <p>Doc Name</p>
-                </div>
-                
-              </div>
-              
-              
-              
-            </div>
+            @endfor
+                      @endif
             <div class="row approve-top">
               <div class="col-lg-12">
-                <h3>Congrat You bid is approved</h3>
+                <h3>Congratulation Your bid is approved</h3>
               </div>
               
             </div>
             <form>
               <div class="row mt-3 mb-3">
                 
-                <div class="col-xl-1 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Price</label>
+              <div class="col-lg-6 col-md-7 col-sm-7">
+                <div class="outer-wrapper-ppv">
+                  <label>price</label>
+                  <label>Proposal</label>
+                  <label>VAT</label>
+                </div>
+                <div class="outer-wrapper-ppv-bottom">
                   <div>
-                    <input type="text" name="price" class="form-control input-setting">
+                    <label>{{$bid->price}}</label>
+                  </div>
+                  <div>
+                    <a type="button" href="{{$bid->document != '' ? route('download-proposal', ['id' => $bid->id]) : '#'}}">{{isset($bid->document) && $bid->document != '' ? 'Download' : 'No Doc.'}}</a>
+                  </div>
+                  <div>
+                    <label>{{$bid->vat}}</label>
                   </div>
                 </div>
-                <div class="col-xl-2 col-lg-3 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Proposal</label>
-                  <div>
-                    <input type="file" name="Proposal" class="form-control input-setting" >
-                  </div>
-                </div>
-                <div class="col-xl-1 col-lg-2 col-md-3 col-6">
-                  <label class="price-proposal-vat-label">Vat</label>
-                  <div>
-                    <input type="text" name="vat" class="form-control input-setting" >
-                  </div>
-                </div>
+              </div>
                 
               </div>
             </form>

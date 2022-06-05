@@ -171,6 +171,6 @@ Route::get('new-opportunity-detail/{id}', [UserController::class, 'new_opportuni
 
 Route::get('approve-this-bid', [UserController::class, 'approve_this_bid'])->name('approve-this-bid');
 
-Route::get('cong-bid-approved', [UserController::class, 'cong_bid_approved'])->name('cong-bid-approved');
+Route::get('cong-bid-approved/{bid}', [UserController::class, 'cong_bid_approved'])->name('cong-bid-approved');
 
 

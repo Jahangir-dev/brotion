@@ -170,7 +170,7 @@
                   </div>
                   <div class="col-lg-5 col-md-12 card-inner-seeting">
                     <div class="col-lg-12 px-0">
-                      <h6 class="furniture-font">{{$tender->tender_title}}</h6>
+                      <h6 class="furniture-font"><a href="{{route('cong-bid-approved', ['bid' => $tender->bids[0]->id])}}">{{$tender->tender_title}}</a></h6>
                     </div>
                     <div class="card-items">
                       <div class="card-item1">

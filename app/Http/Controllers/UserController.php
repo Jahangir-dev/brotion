@@ -916,9 +916,17 @@ class UserController extends Controller
     return view('userpages.approve_this_bid', compact('setting'));
   }
 
-  public function cong_bid_approved()
+  public function cong_bid_approved($bid)
   {
-    $setting = FooterSetting::first();
-    return view('userpages.cong_bid_approved', compact('setting'));
+    $bid = Bid::where('id', $bid)->first();
+    if(!$bid)
+    {
+      return redirect()->back()->with('error', 'Bid not found');
+    }
+    else{
+      $tender = $bid->tender;
+      $setting = FooterSetting::first();
+      return view('userpages.cong_bid_approved', compact('setting', 'bid', 'tender'));
+    }
   }
 }
