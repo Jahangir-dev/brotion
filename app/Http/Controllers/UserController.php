@@ -79,7 +79,7 @@ class UserController extends Controller
         $datediff = $your_date - $now;
         $o->due_date = round($datediff / (60 * 60 * 24));
       }
-      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount',''));
+      return view('welcome', compact('opportunity', 'category', 'setting','usersCount','tendersCount','bidsCount'));
     }
   }
 
