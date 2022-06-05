@@ -66,7 +66,7 @@
                 <option value="{{Null}}"> Category</option>
                 @foreach($category as $c)
                 <option value="{{$c->id}}">{{$c->name}}</option>
-                @endforeach()
+                @endforeach
               </select>
             </form>
           </div>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="row pt-2">
                       <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{$tender->user->profile_photo_path}}" alt="" class="rounded img-fluid images-width">
+                        <img src="{{isset($tender->user->profile_photo_path) ? $tender->user->profile_photo_path : ''}}" alt="" class="rounded img-fluid images-width">
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
                         <div class="items-rowone">
