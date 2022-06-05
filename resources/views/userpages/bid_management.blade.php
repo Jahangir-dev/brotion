@@ -155,14 +155,14 @@
                   <div class="col-lg-4 col-md-12">
                     <div class="row card_two_iner_row">
                       <div class="col-lg-6 col-md-4 col-sm-4 col-4">
-                        <img src="{{$tender->user->profile_photo_path}}" class="table-img">
+                        <img src="{{isset($tender->user->profile_photo_path) ? $tender->user->profile_photo_path : ''}}" class="table-img">
                       </div>
                       <div class="col-lg-4 px-0 col-md-4 col-sm-4 col-4">
-                        <img src="{{$tender->user->user_detail->company_logo}}" class="es-image rounded-circle">
+                        <img src="{{isset($tender->user->user_detail->company_logo) ? $tender->user->user_detail->company_logo : '' }}" class="es-image rounded-circle">
                         
                       </div>
                       <div class="col-lg-2 col-md-4 col-sm-4 col-4" style="padding: 0px">
-                        <p class="es-para">{{$tender->user->user_detail->company_name}}</p>
+                        <p class="es-para">{{isset($tender->user->user_detail->company_name) ? $tender->user->user_detail->company_name :  ''}}</p>
                       </div>
                       
                     </div>
@@ -207,7 +207,7 @@
               <div class="card-footer-outer-wrapper">
                 <div class="row card-last-row pt-1">
                   <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                    <p class="Riadh"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid"><span>{{$tender->user->user_detail->city_name}}</span></p>
+                    <p class="Riadh"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid"><span>{{isset($tender->user->user_detail->city_name) ? $tender->user->user_detail->city_name : '' }}</span></p>
                   </div>
                   <div class="col-lg-2 col-md-6 col-sm-6 see-times col-6">
                     <p>Seen<span>{{$tender->seen}} Times</span></p>
