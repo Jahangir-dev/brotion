@@ -11,6 +11,9 @@
     <title>Opportunity Mangement</title>
     
   </head>
+  <style>
+        .dot {background: blueviolet !important;}
+  </style>
   <body>
     <section style="background-color:#1c76b9;">
       @include('frontendtemplate.navbarn')
@@ -104,6 +107,7 @@
                 
                 <div class="col-lg-9">
                 <?php 
+             
                             $future = strtotime($tender->due_date);
                             $now = time();
                             $timeleft = $future-$now;
@@ -140,7 +144,7 @@
                       <li data-year="" data-text="Awarded"></li>
 
                     </ul>
-                    @elseif($bid->approved)
+                  @elseif($bid->approved)
                   <ul class="timeline">
                       <li data-text="Publish Date" class="dot" data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
                       
