@@ -175,7 +175,7 @@
                         
                         <div class="items-rowtwo">
                           <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" style="width: 60px;height: 60px;" src="{{$tender->user->user_detail->company_logo}}">
+                            <img class="img-fluid" style="width: 60px;height: 60px;" src="{{isset($tender->user->user_detail->company_logo) ? $tender->user->user_detail->company_logo : ''}}">
                           </div>
                           <div class="items-rowtwo-itemtwo">
                             <p class="mb-4 company-font">{{$tender->user->user_detail->company_name}}</p>
