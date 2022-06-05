@@ -130,12 +130,12 @@
                   <label for="no" class="label-card">Closed</label>
                 </div>
                 <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" {{request()->get('paid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="paid" value="1">
-                    <label for="no" class="label-card">Paid</label>
+                    <input type="checkbox" id="paid" {{request()->get('paid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="paid" value="1">
+                    <label for="paid" class="label-card">Paid</label>
                   </div>
                   <div class="col-lg-12 card-check-boxes">
-                    <input type="checkbox" id="no" {{request()->get('unpaid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="unpaid" value="1">
-                    <label for="no" class="label-card">Unpaid</label>
+                    <input type="checkbox" id="unpaid" {{request()->get('unpaid') == '1' ? 'checked' : ''}} class="check-box qualifiactionclass" name="unpaid" value="1">
+                    <label for="unpaid" class="label-card">Unpaid</label>
                   </div>
                </form>
 
