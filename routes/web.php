@@ -16,14 +16,16 @@ use App\Http\Controllers\BidController;
 |
 */
 Route::get('/', function () {
-return redirect()->route('welcome');
+    return redirect()->route('welcome');
 });
+
 Route::get('/home', function () {
     return redirect()->route('welcome');
-    })->name('home');
+})->name('home');
+
 Route::get('/profile', function () {
     return view('profile');
-    });
+});
 Route::get('new_tender_one',[TenderController::class, 'index'])->name('new_tender_one');
 Route::post('new_tender_one_save',[TenderController::class, 'onesave'])->name('new_tender_one_save');
 
@@ -59,78 +61,49 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['prefix' => 'admin',  'middleware' => ['can:admin']], function()
 {
-Route::get('admin-home', [AdminController::class, 'admin_home'])->name('admin-home');
-Route::get('user-delete/{id}/{role}', [AdminController::class, 'user_delete'])->name('user-delete');
-Route::get('user-bidding', [AdminController::class, 'user_bidding'])->name('user-bidding');
-Route::get('admin-user-bidding-delete/{id}', [AdminController::class, 'admin_user_bidding_delete'])->name('admin-user-bidding-delete');
-Route::get('opportunity-title-list', [AdminController::class, 'opportunity_title_list'])->name('opportunity-title-list');
-Route::get('admin-opportuninty-title', [AdminController::class, 'admin_opportuninty_title'])->name('admin-opportuninty-title');
-Route::post('opportunity-title-save', [AdminController::class, 'opportunity_title_save'])->name('opportunity-title-save');
-Route::get('admin-opportuninty-title-edit/{id}', [AdminController::class, 'admin_opportuninty_title_edit'])->name('admin-opportuninty-title-edit');
-Route::post('opportunity-title-update', [AdminController::class, 'opportunity_title_update'])->name('opportunity-title-update');
-Route::get('admin-opportuninty-title-delete/{id}', [AdminController::class, 'admin_opportuninty_title_delete'])->name('admin-opportuninty-title-delete');
-Route::get('sector-list', [AdminController::class, 'sector_list'])->name('sector-list');
-Route::get('admin-add-sector', [AdminController::class, 'admin_add_sector'])->name('admin-add-sector');
-Route::post('admin-sector-save', [AdminController::class, 'admin_sector_save'])->name('admin-sector-save');
-Route::get('sector-edit/{id}', [AdminController::class, 'sector_edit'])->name('sector-edit');
-Route::post('admin-sector-update', [AdminController::class, 'admin_sector_update'])->name('admin-sector-update');
-Route::get('admin-sector-delete/{id}', [AdminController::class, 'admin_sector_delete'])->name('admin-sector-delete');
-Route::get('city-list', [AdminController::class, 'city_list'])->name('city-list');
-Route::get('admin-add-new-city', [AdminController::class, 'admin_add_new_city'])->name('admin-add-new-city');
-Route::post('admin-city-save', [AdminController::class, 'admin_city_save'])->name('admin-city-save');
-Route::get('admin-city-edit/{id}', [AdminController::class, 'admin_city_edit'])->name('admin-city-edit');
-Route::post('admin-city-update', [AdminController::class, 'admin_city_update'])->name('admin-city-update');
-Route::get('admin-city-delete/{id}', [AdminController::class, 'admin_city_delete'])->name('admin-city-delete');
-Route::get('province-list', [AdminController::class, 'province_list'])->name('province-list');
-Route::get('add-new-province', [AdminController::class, 'add_new_province'])->name('add-new-province');
-Route::post('admin-province-save', [AdminController::class, 'admin_province_save'])->name('admin-province-save');
-Route::get('province-edit/{id}', [AdminController::class, 'province_edit'])->name('province-edit');
-Route::get('province-delete/{id}', [AdminController::class, 'province_delete'])->name('province-delete');
-Route::post('admin-province-update', [AdminController::class, 'admin_province_update'])->name('admin-province-update');
-Route::get('admin-details', [AdminController::class, 'admin_details'])->name('admin-details');
-Route::get('add-details', [AdminController::class, 'add_details'])->name('add-details');
-Route::post('admin-details-save', [AdminController::class, 'admin_details_save'])->name('admin-details-save');
-Route::get('admin-detail-edit/{id}', [AdminController::class, 'admin_detail_edit'])->name('admin-detail-edit');
-Route::post('admin-detail-update', [AdminController::class, 'admin_detail_update'])->name('admin-detail-update');
-
-
-
-Route::get('admin-detail-delete/{id}', [AdminController::class, 'admin_detail_delete'])->name('admin-detail-delete');
-
-
-Route::get('opportunity-category-list', [AdminController::class, 'opportunity_category_list'])->name('opportunity-category-list');
-
-
-
-Route::get('add-new-opp-category', [AdminController::class, 'add_new_opp_category'])->name('add-new-opp-category');
-
-
-
-Route::post('admin-category-save', [AdminController::class, 'admin_category_save'])->name('admin-category-save');
-
-
-
-Route::get('opp-category-delete/{id}', [AdminController::class, 'opp_category_delete'])->name('opp-category-delete');
-
-
-
-Route::get('opp-category-edit/{id}', [AdminController::class, 'opp_category_edit'])->name('opp-category-edit');
-
-
-
-Route::post('admin-category-update', [AdminController::class, 'admin_category_update'])->name('admin-category-update');
-
-
-
-Route::get('footer-setting', [AdminController::class, 'footer_setting'])->name('footer-setting');
-
-
-
-
-Route::post('footer-setting-save', [AdminController::class, 'footer_setting_save'])->name('footer-setting-save');
-
-
-Route::get('footer-setting-delete/{id}', [AdminController::class, 'footer_setting_delete'])->name('footer-setting-delete');
+    Route::get('admin-home', [AdminController::class, 'admin_home'])->name('admin-home');
+    Route::get('user-delete/{id}/{role}', [AdminController::class, 'user_delete'])->name('user-delete');
+    Route::get('user-bidding', [AdminController::class, 'user_bidding'])->name('user-bidding');
+    Route::get('admin-user-bidding-delete/{id}', [AdminController::class, 'admin_user_bidding_delete'])->name('admin-user-bidding-delete');
+    Route::get('opportunity-title-list', [AdminController::class, 'opportunity_title_list'])->name('opportunity-title-list');
+    Route::get('admin-opportuninty-title', [AdminController::class, 'admin_opportuninty_title'])->name('admin-opportuninty-title');
+    Route::post('opportunity-title-save', [AdminController::class, 'opportunity_title_save'])->name('opportunity-title-save');
+    Route::get('admin-opportuninty-title-edit/{id}', [AdminController::class, 'admin_opportuninty_title_edit'])->name('admin-opportuninty-title-edit');
+    Route::post('opportunity-title-update', [AdminController::class, 'opportunity_title_update'])->name('opportunity-title-update');
+    Route::get('admin-opportuninty-title-delete/{id}', [AdminController::class, 'admin_opportuninty_title_delete'])->name('admin-opportuninty-title-delete');
+    Route::get('sector-list', [AdminController::class, 'sector_list'])->name('sector-list');
+    Route::get('admin-add-sector', [AdminController::class, 'admin_add_sector'])->name('admin-add-sector');
+    Route::post('admin-sector-save', [AdminController::class, 'admin_sector_save'])->name('admin-sector-save');
+    Route::get('sector-edit/{id}', [AdminController::class, 'sector_edit'])->name('sector-edit');
+    Route::post('admin-sector-update', [AdminController::class, 'admin_sector_update'])->name('admin-sector-update');
+    Route::get('admin-sector-delete/{id}', [AdminController::class, 'admin_sector_delete'])->name('admin-sector-delete');
+    Route::get('city-list', [AdminController::class, 'city_list'])->name('city-list');
+    Route::get('admin-add-new-city', [AdminController::class, 'admin_add_new_city'])->name('admin-add-new-city');
+    Route::post('admin-city-save', [AdminController::class, 'admin_city_save'])->name('admin-city-save');
+    Route::get('admin-city-edit/{id}', [AdminController::class, 'admin_city_edit'])->name('admin-city-edit');
+    Route::post('admin-city-update', [AdminController::class, 'admin_city_update'])->name('admin-city-update');
+    Route::get('admin-city-delete/{id}', [AdminController::class, 'admin_city_delete'])->name('admin-city-delete');
+    Route::get('province-list', [AdminController::class, 'province_list'])->name('province-list');
+    Route::get('add-new-province', [AdminController::class, 'add_new_province'])->name('add-new-province');
+    Route::post('admin-province-save', [AdminController::class, 'admin_province_save'])->name('admin-province-save');
+    Route::get('province-edit/{id}', [AdminController::class, 'province_edit'])->name('province-edit');
+    Route::get('province-delete/{id}', [AdminController::class, 'province_delete'])->name('province-delete');
+    Route::post('admin-province-update', [AdminController::class, 'admin_province_update'])->name('admin-province-update');
+    Route::get('admin-details', [AdminController::class, 'admin_details'])->name('admin-details');
+    Route::get('add-details', [AdminController::class, 'add_details'])->name('add-details');
+    Route::post('admin-details-save', [AdminController::class, 'admin_details_save'])->name('admin-details-save');
+    Route::get('admin-detail-edit/{id}', [AdminController::class, 'admin_detail_edit'])->name('admin-detail-edit');
+    Route::post('admin-detail-update', [AdminController::class, 'admin_detail_update'])->name('admin-detail-update');
+    Route::get('admin-detail-delete/{id}', [AdminController::class, 'admin_detail_delete'])->name('admin-detail-delete');
+    Route::get('opportunity-category-list', [AdminController::class, 'opportunity_category_list'])->name('opportunity-category-list');
+    Route::get('add-new-opp-category', [AdminController::class, 'add_new_opp_category'])->name('add-new-opp-category');
+    Route::post('admin-category-save', [AdminController::class, 'admin_category_save'])->name('admin-category-save');
+    Route::get('opp-category-delete/{id}', [AdminController::class, 'opp_category_delete'])->name('opp-category-delete');
+    Route::get('opp-category-edit/{id}', [AdminController::class, 'opp_category_edit'])->name('opp-category-edit');
+    Route::post('admin-category-update', [AdminController::class, 'admin_category_update'])->name('admin-category-update');
+    Route::get('footer-setting', [AdminController::class, 'footer_setting'])->name('footer-setting');
+    Route::post('footer-setting-save', [AdminController::class, 'footer_setting_save'])->name('footer-setting-save');
+    Route::get('footer-setting-delete/{id}', [AdminController::class, 'footer_setting_delete'])->name('footer-setting-delete');
 
 
 });
@@ -145,11 +118,7 @@ Route::get('get-sector', [AdminController::class, 'getsector'])->name('get-secto
 Route::group(['prefix' => 'user',  'middleware' => ['can:user']], function()
 {
 Route::get('user-home', [UserController::class, 'user_home'])->name('user-home');
-
-
 Route::get('opportunity-management', [UserController::class, 'opportunity_management'])->name('opportunity-management');
-
-
 Route::get('create-new-opportunity', [UserController::class, 'create_new_opportunity'])->name('create-new-opportunity');
 Route::get('create-opportunity/{type}', [UserController::class, 'create_opportunity'])->name('create-opportunity');
 Route::post('user-opportunity-save', [UserController::class, 'user_opportunity_save'])->name('user-opportunity-save');

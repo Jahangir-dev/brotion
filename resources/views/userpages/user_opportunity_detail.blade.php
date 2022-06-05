@@ -153,28 +153,48 @@
                             if ($date_now >= $date2) {
                                   $nowDate = true;
                             }
+
+                            
                           ?>
+
+                    
                   
                   <div class="Scriptcontent">
-                    
+                  @if(!isset($tender->bid->approved))
                     <!-- partial:index.partial.html -->
                     <ul class="timeline">
-                      <li data-text="Publish Date." @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      <li data-text="Publish Date" @if($nowDate) class="dot" @endif data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
                       
-                      <li data-year="" @if($daysleft >= 2) class="dot" @endif></li>
-                      <li data-year="" @if($daysleft >= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
-                      <li data-year="" @if($daysleft >= 1 && $daysleft < 1.5) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 2) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 1.5 && $daysleft < 2 ) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 1 && $daysleft < 1.5) class="dot" @endif></li>
                       
-                      <li data-year="" @if($daysleft >= 0.5 && $daysleft < 1) class="dot" @endif></li>
-                      <li data-year="" @if($daysleft > 0 && $daysleft < 0.5) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft <= 0.5 && $daysleft < 1) class="dot" @endif></li>
+                      <li data-year="" @if($daysleft == 0 && $daysleft < 0.5) class="dot" @endif></li>
                       
                       <li @if($daysleft == 0 && $daysleft < 0) class="dot" @endif data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
                       <li data-year="" data-text="Awarded"></li>
+
+                    </ul>
+                    @elseif($tender->bid->approved)
+                  <ul class="timeline">
+                      <li data-text="Publish Date" class="dot" data-year="{{date('d M', strtotime($tender->created_at))}}" ></li>
+                      
+                      <li data-year=""  class="dot" ></li>
+                      <li data-year=""  class="dot"></li>
+                      <li data-year="" class="dot"></li>
+                      
+                      <li data-year=""  class="dot" ></li>
+                      <li data-year=""  class="dot" ></li>
+                      
+                      <li  class="dot"  data-year="{{date('d M', strtotime($tender->due_date))}}" data-text="Due Date."></li>
+                      <li  class="dot" data-year="" data-text="Awarded"></li>
                       
                       
                       
                       
                     </ul>
+                  @endif
                     <!-- partial -->
                   </div>
                 </div>

@@ -66,7 +66,7 @@
                 <option value="{{Null}}"> Category</option>
                 @foreach($category as $c)
                 <option value="{{$c->id}}">{{$c->name}}</option>
-                @endforeach()
+                @endforeach
               </select>
             </form>
           </div>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="row pt-2">
                       <div class="col-lg-4 col-md-4 col-sm-6 col-4" style="padding:0px">
-                        <img src="{{$tender->user->profile_photo_path}}" alt="" class="rounded img-fluid images-width">
+                        <img src="{{isset($tender->user->profile_photo_path) ? $tender->user->profile_photo_path : ''}}" alt="" class="rounded img-fluid images-width">
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-6 col-8 ">
                         <div class="items-rowone">
@@ -175,10 +175,10 @@
                         
                         <div class="items-rowtwo">
                           <div class="items-rowtwo-itemone">
-                            <img class="img-fluid" style="width: 60px;height: 60px;" src="{{$tender->user->user_detail->company_logo}}">
+                            <img class="img-fluid" style="width: 60px;height: 60px;" src="{{isset($tender->user->user_detail->company_logo) ? $tender->user->user_detail->company_logo : ''}}">
                           </div>
                           <div class="items-rowtwo-itemtwo">
-                            <p class="mb-4 company-font">{{$tender->user->user_detail->company_name}}</p>
+                            <p class="mb-4 company-font">{{isset($tender->user->user_detail->company_name) ? $tender->user->user_detail->company_name : '' }}</p>
                           </div>
                           
                         </div>
@@ -190,7 +190,7 @@
                     <div class="Line-73"></div>
                     <div class="row pt-1">
                       <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{$tender->user->user_detail->city_name}}</span></p>
+                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{isset($tender->user->user_detail->city_name) ? $tender->user->user_detail->city_name : ''}}</span></p>
                       </div>
                       <div class="col-xl-4 col-5">
         <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> {{$tender->seen}} Times</strong></p>
