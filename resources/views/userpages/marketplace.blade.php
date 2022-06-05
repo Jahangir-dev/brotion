@@ -190,7 +190,7 @@
                     <div class="Line-73"></div>
                     <div class="row pt-1">
                       <div class="col-xl-4 col-3">
-                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{$tender->user->user_detail->city_name}}</span></p>
+                        <p class="cards-last-rowone-paras"><img src="{{asset('asset/images/ic_place_24px.svg')}}"   class="rounded-circle img-fluid cards-last-rowimgone"> <span class="cards-last-rowimg-span"> {{isset($tender->user->user_detail->city_name) ? $tender->user->user_detail->city_name : ''}}</span></p>
                       </div>
                       <div class="col-xl-4 col-5">
         <p class="cards-last-rowone-paras">Seen<strong class="cards-last-rowone-paras-strong"> {{$tender->seen}} Times</strong></p>
