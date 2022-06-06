@@ -16,6 +16,9 @@
   .dot {
     background: blueviolet !important;
   }
+  .capital {
+          text-transform: uppercase !important;
+        }
 </style>
 
 <body>
@@ -60,43 +63,43 @@
                     <h1 class="right-card-headings">Publisher</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{$tender->user->name}}</p>
+                    <p class="right-card-paras capital">{{$tender->user->name}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Publish date :</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{date('d-m-Y', strtotime($tender->created_at))}}</p>
+                    <p class="right-card-paras capital">{{date('d-m-Y', strtotime($tender->created_at))}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Category :</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{$tender->category->name}}</p>
+                    <p class="right-card-paras capital">{{$tender->category->name}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Delivery City :</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{$tender->city->name ?? ''}}</p>
+                    <p class="right-card-paras capital">{{$tender->city->name ?? ''}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Delivery deadline :</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{date('d-m-Y', strtotime($tender->due_date))}}</p>
+                    <p class="right-card-paras capital">{{date('d-m-Y', strtotime($tender->due_date))}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Payment days :</h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{$tender->payment_days . ' days'}}</p>
+                    <p class="right-card-paras capital">{{$tender->payment_days . ' days'}}</p>
                   </div>
                   <div class="col-lg-7 col-7">
                     <h1 class="right-card-headings">Payment Type : </h1>
                   </div>
                   <div class="col-lg-5 col-5">
-                    <p class="right-card-paras">{{$tender->payment_method}}</p>
+                    <p class="right-card-paras capital">{{$tender->payment_method}}</p>
                   </div>
 
                 </div>

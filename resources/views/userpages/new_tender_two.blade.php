@@ -127,10 +127,10 @@
 
                             <div>
                                 <div>
-                                    <label class="fw-bold h5 TEXT-COLOR" for="quality"> Quality</label>
+                                    <label class="fw-bold h5 TEXT-COLOR" for="quality"> Quantity</label>
                                 </div>
                                 <div>
-                                    <input class="INPUT_MEDIUM dynamic" required="" type="text" id="quality1">
+                                    <input class="INPUT_MEDIUM dynamic" required="" type="number" id="quality1">
                                 </div>
                             </div>
 

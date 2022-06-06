@@ -28,7 +28,7 @@ class TenderController extends Controller
             'services'              => 'required',
             'tender_category'       => 'required',
             'tender_title'          => 'required',
-            'ref_no'                => 'required',
+            // 'ref_no'                => 'required',
             'payment_method'        => 'required',
             'payment_days'          => 'required',
             'due_date'              => 'required',

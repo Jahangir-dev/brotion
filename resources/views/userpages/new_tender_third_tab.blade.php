@@ -211,7 +211,7 @@
                         <h2>{{ (($tender->items['sow'] ?? '') == 'on')? "SOW" : "BOQ" }}</h2>
                         @if($tender->items['sow'] == 'on')
                         <?php $uploadFolder = 'tenders/' . $tender->id . '/' . $tender->items['document_file'];?>
-                            <a href="{{asset($uploadFolder)}}" download="{{$tender->items['document_file']}}" class="btn">File Name <i class="bi bi1 bi-download"></i></a>
+                            <a href="{{asset($uploadFolder)}}" download="{{$tender->items['document_file']}}" class="btn">{{ $tender->items['document']}} <i class="bi bi1 bi-download"></i></a>
                         @endif
                     </div>
                 </div>
