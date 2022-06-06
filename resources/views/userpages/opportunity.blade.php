@@ -274,7 +274,7 @@
     margin-right: 1rem;
     border-radius: 7px;color:white;">Unpaid</button>
                     @endif
-                    <button class="btn btn-secondary approved" data-date="{{date('Y-m-d', strtotime($tender->due_date))}}" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
+                    <button class="btn btn-secondary approved" data-date="{{date('Y-m-d', strtotime(now()))}}" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
                   </div>
                 </div>
               </div>
