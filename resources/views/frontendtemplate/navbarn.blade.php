@@ -47,7 +47,7 @@ margin-left: 80px;
     <div class="m-4" style="margin-top:0px !important">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-          <a href="#" class="navbar-brand"><img src="{{asset('asset/images/newlogo.png')}}" class="logo"></a>
+          <a href="/" class="navbar-brand"><img src="{{asset('asset/images/newlogo.png')}}" class="logo"></a>
           <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
           </button>

@@ -274,7 +274,7 @@
     margin-right: 1rem;
     border-radius: 7px;color:white;">Unpaid</button>
                     @endif
-                    <button class="btn btn-secondary approved" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
+                    <button class="btn btn-secondary approved" data-date="{{date('d/m/Y', strtotime($tender->due_date))}}" data-whatever="{{$tender->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Extend Date</button>
                   </div>
                 </div>
               </div>
@@ -308,7 +308,7 @@
               <div class="modal-body">
                       <input type="hidden" id="idDate" name="id" value=""/>
                       @csrf
-                      <input type="date" class="form-control" name="date" value="" required/>
+                      <input type="date" id="extend-date" class="form-control" name="date" value="" required/>
                     
               </div>
               <div class="modal-footer">
@@ -402,6 +402,7 @@
 
 
     <script type="text/javascript">
+      
         $(function(){
          $('.qualifiactionclass').on('change',function(){
             $('#qualifiaction').submit();
@@ -426,6 +427,20 @@
       $('#exampleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var recipient = button.data('whatever'); // Extract info from data-* attributes
+        var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    // var maxDate = day + '/' + month + '/' + year;
+    var maxDate = button.data('date');
+    $('#extend-date').attr('value', maxDate);
+    $('#extend-date').attr('min', maxDate);
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
        

@@ -100,10 +100,7 @@ class AuthController extends Controller
          
          
             $cnic_chk=User::where('email',$request->email)->first();
-            if(!empty($cnic_chk)){
-            alert()->error('Email Must Be Unique');
-            return redirect()->back();
-            }
+            
 
         $input = $request->all();
             $request->validate([
@@ -172,8 +169,10 @@ class AuthController extends Controller
 
           }
 
-            $std_id=User::insertGetId([
-            'name'=>$request->name,
+          if(!empty($cnic_chk) && $cnic_chk->login_status == '0'){
+            $std_id = $cnic_chk->id;
+            $cnic_chk->update([
+              'name'=>$request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,
             'address'=>$request->address,
@@ -181,27 +180,58 @@ class AuthController extends Controller
             'token' => $token,
             'role'=>$role,
             ]);
-            UserDetails::insert([
-            'user_id'=>$std_id,
-            'company_name'=>$request->company_name,
-            'position'=>$request->position,
-            'landline_number'=>$request->landline_number,
-            'building_number'=>$request->building_number,
-            'street_name' => $request->street_number,
-            'zip_code'=>$request->zip_code,
-            'district_name'=>$request->district_name,
-            'city_name'=>$request->city_name,
-            'company_logo'=>$companylogo,
-            'commerical_registration'=>$commercialregistration,
-            'vat_certification'=>$vatcertificate,
-            ]);
-
-
-
-
-            $id=User::find($std_id);
+            $user_d = UserDetails::where('user_id', $cnic_chk->id)->first();
+            if($user_d)
+            {
+              $user_d->user_id = $std_id;
+              $user_d->company_name = $request->company_name;
+              $user_d->position = $request->position;
+              $user_d->landline_number = $request->landline_number;
+              $user_d->building_number = $request->building_number;
+              $user_d->street_name = $request->street_number;
+              $user_d->zip_code = $request->zip_code;
+              $user_d->district_name = $request->district_name;
+              $user_d->city_name = $request->city_name;
+              $user_d->company_logo = $companylogo;
+              $user_d->commerical_registration = $commercialregistration;
+              $user_d->vat_certification = $vatcertificate;
+              $user_d->save();
+            }
+            }
+            else{
+              $std_id=User::insertGetId([
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'phone'=>$request->phone,
+                'address'=>$request->address,
+                'password'=>bcrypt($request->password),
+                'token' => $token,
+                'role'=>$role,
+                ]);
+                UserDetails::insert([
+                'user_id'=>$std_id,
+                'company_name'=>$request->company_name,
+                'position'=>$request->position,
+                'landline_number'=>$request->landline_number,
+                'building_number'=>$request->building_number,
+                'street_name' => $request->street_number,
+                'zip_code'=>$request->zip_code,
+                'district_name'=>$request->district_name,
+                'city_name'=>$request->city_name,
+                'company_logo'=>$companylogo,
+                'commerical_registration'=>$commercialregistration,
+                'vat_certification'=>$vatcertificate,
+                ]);
+                $id=User::find($std_id);
             $role=DB::table('roles')->where('name','User')->first();
             $id->roles()->attach($role->id);
+            }
+            
+
+
+
+
+            
             alert()->success('New User is Registered');
 
                 $email = $request->email;

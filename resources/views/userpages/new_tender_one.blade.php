@@ -254,6 +254,20 @@
     <script src="https://kit.fontawesome.com/f46361531e.js" crossorigin="anonymous"></script>
 
     <script>
+        $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = day + '/' + month + '/' + year;
+    $('#due_date').attr('min', maxDate);
+});
         var countre = 1;
 
         function add_more_field() {

@@ -223,7 +223,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
               <label class="Item-names">Item Name</label>
               <div class="background-div-setting">
-                <h1>{{$items['item'.$i]}}</h1>
+                <p style="font-weight: bold;">{{$items['item'.$i]}}</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6">
@@ -254,14 +254,6 @@
         <hr class="items-mid-line">
         @endfor
         @endif
-
-        <div class="row approve-top">
-          <div class="col-lg-12">
-            <h3>Send Your Bid/Proposal on the Opportunity</h3>
-          </div>
-
-        </div>
-
         <?php
         $user_own = true;
         if (isset(Auth::user()->id)) {
@@ -270,6 +262,16 @@
           }
         }
         ?>
+        @if($user_own)
+        <div class="row approve-top">
+          <div class="col-lg-12">
+            <h3>Send Your Bid/Proposal on the Opportunity</h3>
+          </div>
+
+        </div>
+        @endif
+
+        
         @if($user_own)
         @if($bidStatus == 0)
         <form action="{{route('saveBid')}}" method="POST" name="save-bid" enctype="multipart/form-data">

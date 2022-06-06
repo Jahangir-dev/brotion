@@ -184,7 +184,7 @@
               <div class="col-lg-3 col-md-6 col-sm-6">
                 <label class="Item-names">Item Name</label>
                 <div class="background-div-setting">
-                  <h1>{{$items['item'.$i]}}</h1>
+                  <p style="font-weight: bold;">{{$items['item'.$i]}}</p>
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 col-sm-6">
