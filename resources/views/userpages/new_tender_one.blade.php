@@ -265,7 +265,7 @@
     if(day < 10)
         day = '0' + day.toString();
     
-    var maxDate = day + '/' + month + '/' + year;
+    var maxDate = year + '-' + month + '-' + day;
     $('#due_date').attr('min', maxDate);
 });
         var countre = 1;
