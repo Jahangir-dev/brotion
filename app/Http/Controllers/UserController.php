@@ -899,7 +899,13 @@ class UserController extends Controller
   {
       Tender::where('id', $id)->increment('seen');
       $tender = Tender::where('id', $id)->with('city')->with('bid')->first();
-      $bidStatus = Bid::where('tender_id',$id)->where('user_id',Auth::user()->id)->count();
+      if(Auth::check())
+      {
+        $bidStatus = Bid::where('tender_id',$id)->where('user_id',Auth::user()->id)->count();
+      }
+      else{
+        $bidStatus = 1;
+      }
       
       if(!$tender)
       {

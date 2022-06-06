@@ -262,7 +262,7 @@
           }
         }
         ?>
-        @if($user_own)
+        @if($user_own && Auth::check())
         <div class="row approve-top">
           <div class="col-lg-12">
             <h3>Send Your Bid/Proposal on the Opportunity</h3>
@@ -302,8 +302,10 @@
             </div>
           </div>
         </form>
-        @else
+        @elseif(Auth::check())
         <h1>You have already bid on this tender</h1>
+        @elseif(!Auth::check())
+        <h1>Please login first to bid on this Tender</h1>
         @endif
         @else
         <h1>You can't bid on your own tender</h1>
